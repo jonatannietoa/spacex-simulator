@@ -1,0 +1,8 @@
+package com.spacexsimulator.falcon9.mission.application.statesmachine;
+
+public enum MissionStates {
+    CHECK, LAUNCH, ASCENT, STAGE_SEPARATION, FLIP_MANEUVER, BOOST_BACK_BURN, GRID_FINS_DEPLOY, ENTRY_BURN,
+    AERODYNAMIC_GUIDANCE, VERTICAL_LANDING, LANDED_CHECKS,
+    FAIRING_SEPARATION, PAYLOAD_SEPARATION,
+    STOP
+}
