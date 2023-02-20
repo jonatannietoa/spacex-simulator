@@ -84,7 +84,13 @@ public class StarlinkStateMachine extends EnumStateMachineConfigurerAdapter<Miss
                     .source(MissionStates.AERODYNAMIC_GUIDANCE).target(MissionStates.VERTICAL_LANDING).event(MissionEvents.SUCCESS).action(new VerticalLanding())
                     .and()
                 .withExternal()
-                    .source(MissionStates.VERTICAL_LANDING).target(MissionStates.LANDED_CHECKS).event(MissionEvents.SUCCESS).action(new Landed());
+                    .source(MissionStates.VERTICAL_LANDING).target(MissionStates.LANDED_CHECKS).event(MissionEvents.SUCCESS).action(new Landed())
+                    .and()
+                .withExternal()
+                    .source(MissionStates.LANDED_CHECKS).target(MissionStates.FAIRING_SEPARATION).event(MissionEvents.SUCCESS).action(new FairingSeparation())
+                    .and()
+                .withExternal()
+                    .source(MissionStates.FAIRING_SEPARATION).target(MissionStates.PAYLOAD_SEPARATION).event(MissionEvents.SUCCESS).action(new PayloadSeparation());
     }
 
 }
