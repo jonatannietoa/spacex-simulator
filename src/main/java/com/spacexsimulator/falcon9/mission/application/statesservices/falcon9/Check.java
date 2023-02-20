@@ -4,6 +4,7 @@ import com.spacexsimulator.falcon9.mission.application.statesmachine.MissionEven
 import com.spacexsimulator.falcon9.mission.application.statesmachine.MissionStates;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.statemachine.StateContext;
 import org.springframework.statemachine.action.Action;
@@ -16,6 +17,8 @@ public class Check implements Action<MissionStates, MissionEvents> {
     @Override
     public void execute(StateContext<MissionStates, MissionEvents> context) {
         logger.info("** Falcon 9 ** Checking");
-        context.getStateMachine().sendEvent(MissionEvents.SUCCESS);
+
+        Message<MissionEvents> event = MessageBuilder.withPayload(MissionEvents.SUCCESS).build();
+        context.getStateMachine().sendEvent(Mono.just(event)).subscribe();
     }
 }
