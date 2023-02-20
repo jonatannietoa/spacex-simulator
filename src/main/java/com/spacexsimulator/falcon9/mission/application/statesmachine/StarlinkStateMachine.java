@@ -1,9 +1,6 @@
 package com.spacexsimulator.falcon9.mission.application.statesmachine;
 
-import com.spacexsimulator.falcon9.mission.application.statesservices.falcon9.Ascent;
-import com.spacexsimulator.falcon9.mission.application.statesservices.falcon9.Check;
-import com.spacexsimulator.falcon9.mission.application.statesservices.falcon9.Launch;
-import com.spacexsimulator.falcon9.mission.application.statesservices.falcon9.Stop;
+import com.spacexsimulator.falcon9.mission.application.statesservices.falcon9.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -46,9 +43,9 @@ public class StarlinkStateMachine extends EnumStateMachineConfigurerAdapter<Miss
         // STATES OF MACHINE
         states
                 .withStates()
-                .initial(MissionStates.CHECK)
-                .state(MissionStates.CHECK, new Check(), null)
-                .states(EnumSet.allOf(MissionStates.class))
+                    .initial(MissionStates.CHECK)
+                    .state(MissionStates.CHECK, new Check(), null)
+                    .states(EnumSet.allOf(MissionStates.class))
         ;
     }
 
@@ -63,7 +60,31 @@ public class StarlinkStateMachine extends EnumStateMachineConfigurerAdapter<Miss
                     .source(MissionStates.CHECK).target(MissionStates.STOP).event(MissionEvents.FAILURE).action(new Stop())
                     .and()
                 .withExternal()
-                    .source(MissionStates.LAUNCH).target(MissionStates.ASCENT).event(MissionEvents.SUCCESS).action(new Ascent());
+                    .source(MissionStates.LAUNCH).target(MissionStates.ASCENT).event(MissionEvents.SUCCESS).action(new Ascent())
+                    .and()
+                .withExternal()
+                    .source(MissionStates.ASCENT).target(MissionStates.STAGE_SEPARATION).event(MissionEvents.SUCCESS).action(new StageSeparation())
+                    .and()
+                .withExternal()
+                    .source(MissionStates.STAGE_SEPARATION).target(MissionStates.FLIP_MANEUVER).event(MissionEvents.SUCCESS).action(new FlipManeuver())
+                    .and()
+                .withExternal()
+                    .source(MissionStates.FLIP_MANEUVER).target(MissionStates.BOOST_BACK_BURN).event(MissionEvents.SUCCESS).action(new BoostBackBurn())
+                    .and()
+                .withExternal()
+                    .source(MissionStates.BOOST_BACK_BURN).target(MissionStates.GRID_FINS_DEPLOY).event(MissionEvents.SUCCESS).action(new GridFinsDeploy())
+                    .and()
+                .withExternal()
+                    .source(MissionStates.GRID_FINS_DEPLOY).target(MissionStates.ENTRY_BURN).event(MissionEvents.SUCCESS).action(new EntryBurn())
+                    .and()
+                .withExternal()
+                    .source(MissionStates.ENTRY_BURN).target(MissionStates.AERODYNAMIC_GUIDANCE).event(MissionEvents.SUCCESS).action(new AerodynamicGuidance())
+                    .and()
+                .withExternal()
+                    .source(MissionStates.AERODYNAMIC_GUIDANCE).target(MissionStates.VERTICAL_LANDING).event(MissionEvents.SUCCESS).action(new VerticalLanding())
+                    .and()
+                .withExternal()
+                    .source(MissionStates.VERTICAL_LANDING).target(MissionStates.LANDED_CHECKS).event(MissionEvents.SUCCESS).action(new Landed());
     }
 
 }

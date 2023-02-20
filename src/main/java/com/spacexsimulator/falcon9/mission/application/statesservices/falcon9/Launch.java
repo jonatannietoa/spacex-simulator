@@ -14,5 +14,6 @@ public class Launch implements Action<MissionStates, MissionEvents> {
     @Override
     public void execute(StateContext<MissionStates, MissionEvents> context) {
         logger.info("** Falcon 9 ** Launching");
+        context.getStateMachine().sendEvent(MissionEvents.SUCCESS);
     }
 }

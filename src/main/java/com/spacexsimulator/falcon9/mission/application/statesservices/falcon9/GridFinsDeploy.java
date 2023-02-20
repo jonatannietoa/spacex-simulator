@@ -13,7 +13,7 @@ public class GridFinsDeploy implements Action<MissionStates, MissionEvents> {
 
     @Override
     public void execute(StateContext<MissionStates, MissionEvents> context) {
-        logger.info("** Falcon 9 ** Engines to boosting back mode");
+        logger.info("** Falcon 9 ** Deploying Grid Fins");
         context.getStateMachine().sendEvent(MissionEvents.SUCCESS);
     }
 }

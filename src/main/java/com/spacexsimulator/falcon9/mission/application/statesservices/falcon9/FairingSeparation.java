@@ -13,7 +13,7 @@ public class FairingSeparation implements Action<MissionStates, MissionEvents> {
 
     @Override
     public void execute(StateContext<MissionStates, MissionEvents> context) {
-        logger.info("** Falcon 9 ** Fairing Separation");
+        logger.info("** Second Stage ** Fairing Separation");
         context.getStateMachine().sendEvent(MissionEvents.SUCCESS);
     }
 }
