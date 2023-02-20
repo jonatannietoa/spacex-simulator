@@ -1,4 +1,5 @@
-package com.spacexsimulator.falcon9.mission.application.statesservices;
+package com.spacexsimulator.falcon9.mission.application.statesservices.falcon9;
+
 
 import com.spacexsimulator.falcon9.mission.application.statesmachine.MissionEvents;
 import com.spacexsimulator.falcon9.mission.application.statesmachine.MissionStates;
@@ -7,12 +8,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.statemachine.StateContext;
 import org.springframework.statemachine.action.Action;
 
-public class LaunchFalcon9 implements Action<MissionStates, MissionEvents> {
-
-    Logger logger = LoggerFactory.getLogger(LaunchFalcon9.class);
+public class StageSeparation implements Action<MissionStates, MissionEvents> {
+    Logger logger = LoggerFactory.getLogger(StageSeparation.class);
 
     @Override
     public void execute(StateContext<MissionStates, MissionEvents> context) {
-        logger.info("Launching Falcon 9");
+        logger.info("** Falcon 9 ** Separating Second Stage");
+        context.getStateMachine().sendEvent(MissionEvents.SUCCESS);
     }
 }

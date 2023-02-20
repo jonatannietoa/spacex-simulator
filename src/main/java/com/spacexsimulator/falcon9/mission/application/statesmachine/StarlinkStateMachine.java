@@ -1,12 +1,9 @@
 package com.spacexsimulator.falcon9.mission.application.statesmachine;
 
-import com.spacexsimulator.falcon9.mission.application.MissionService;
-import com.spacexsimulator.falcon9.mission.application.statesservices.CheckFalcon9;
-import com.spacexsimulator.falcon9.mission.application.statesservices.LaunchFalcon9;
-import com.spacexsimulator.falcon9.mission.application.statesservices.StopFalcon9;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.spacexsimulator.falcon9.mission.application.statesservices.falcon9.Ascent;
+import com.spacexsimulator.falcon9.mission.application.statesservices.falcon9.Check;
+import com.spacexsimulator.falcon9.mission.application.statesservices.falcon9.Launch;
+import com.spacexsimulator.falcon9.mission.application.statesservices.falcon9.Stop;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -25,13 +22,6 @@ import java.util.EnumSet;
 @ComponentScan
 @EnableStateMachine
 public class StarlinkStateMachine extends EnumStateMachineConfigurerAdapter<MissionStates, MissionEvents> {
-
-    private final MissionService missionService;
-
-    @Autowired
-    public StarlinkStateMachine(MissionService missionService) {
-        this.missionService = missionService;
-    }
 
     @Bean
     public StateMachineListener<MissionStates, MissionEvents> listener() {
@@ -57,10 +47,9 @@ public class StarlinkStateMachine extends EnumStateMachineConfigurerAdapter<Miss
         states
                 .withStates()
                 .initial(MissionStates.CHECK)
-                .state(MissionStates.CHECK, new CheckFalcon9(), null)
+                .state(MissionStates.CHECK, new Check(), null)
                 .states(EnumSet.allOf(MissionStates.class))
         ;
-
     }
 
     @Override
@@ -68,10 +57,13 @@ public class StarlinkStateMachine extends EnumStateMachineConfigurerAdapter<Miss
         // STATE MACHINE TRANSITIONS
         transitions
                 .withExternal()
-                    .source(MissionStates.CHECK).target(MissionStates.LAUNCH).event(MissionEvents.SUCCESS).action(new LaunchFalcon9())
+                    .source(MissionStates.CHECK).target(MissionStates.LAUNCH).event(MissionEvents.SUCCESS).action(new Launch())
                     .and()
                 .withExternal()
-                    .source(MissionStates.CHECK).target(MissionStates.STOP).event(MissionEvents.FAILURE).action(new StopFalcon9());
+                    .source(MissionStates.CHECK).target(MissionStates.STOP).event(MissionEvents.FAILURE).action(new Stop())
+                    .and()
+                .withExternal()
+                    .source(MissionStates.LAUNCH).target(MissionStates.ASCENT).event(MissionEvents.SUCCESS).action(new Ascent());
     }
 
 }
