@@ -5,9 +5,9 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class FinDegree {
-    private int value;
+    private Double value;
 
-    public void setValue(int value) throws WrongDegreesValueException {
+    public void setValue(Double value) throws WrongDegreesValueException {
         if (value <= -20 || value >= 20)
             throw new WrongDegreesValueException("Degrees must be between 0 or 20");
 

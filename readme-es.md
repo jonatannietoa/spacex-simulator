@@ -1,28 +1,16 @@
 # Simulador SpaceX
 
-El taller consiste en simular un cohete de SpaceX, en concreto un Falcon 9.
+El taller consiste en simular un cohete de SpaceX, en concreto un Falcon 9. Las físicas y controles de posición son 
+totalmente ficticios siguiendo un poco la lógica, ya que harían todo más complicado, pero si alguien se anima a 
+colaborar bienvenido sea.
 
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
+Para ejecutar en local: 
 
 ```bash
-pip install foobar
-```
-
-## Usage
-
-```python
-import foobar
-
-# returns 'words'
-foobar.pluralize('word')
-
-# returns 'geese'
-foobar.pluralize('goose')
-
-# returns 'phenomenon'
-foobar.singularize('phenomena')
+./gradlew build 
+./gradlew bootRun 
 ```
 
 ## Fases de la misión
@@ -43,7 +31,7 @@ Se trata de que todos los micro servicios respondan con un mensaje de Health Che
 
 Se trata de la fase de lanzamiento, y los micro servicios que entran en marcha son los siguientes:
 
-#### 2.1 Engine - https://{api-url}/api/engine/launch
+#### 2.1 Engine - POST https://{api-url}/api/engine/launch
 
 El motor tiene que primero presurizar la cámara a `2000` psia y poner él `Mode` en `FULL`, esto quiere decir que el 
 atributo `throttle` hay que ajustarlo al 100%. 
@@ -63,7 +51,7 @@ La respuesta de este endpoint al finalizar los ajustes debe ser:
 }
 ```
 
-#### 2.2 Kerosene Control - https://{api-url}/api/kerosene/launch
+#### 2.2 Kerosene Control - POST https://{api-url}/api/kerosene/launch
 
 El control de Keroseno primero de todo debe activar la `mainValve` y seguidamente comenzar a bombear hasta llegar a 
 `fuelPumpPercentage` del 100 % con el valor `1`, donde él `flowRate` irá incrementando hasta `801 kg/s` de combustible al 100%.
@@ -83,7 +71,7 @@ La respuesta de este endpoint al finalizar los ajustes debe ser:
 }
 ```
 
-#### 2.3 LOX Control - https://{api-url}/api/lox/launch
+#### 2.3 LOX Control - POST https://{api-url}/api/lox/launch
 
 El control de oxígeno líquido primero de todo debe activar la `mainValve` y seguidamente comenzar a bombear hasta llegar a
 `fuelPumpPercentage` del 100 % con el valor `1`, donde él `flowRate` irá incrementando hasta `1919 kg/s` de combustible al 100%.
@@ -105,7 +93,7 @@ La respuesta de este endpoint al finalizar los ajustes debe ser:
 
 ![img_1.png](img_1.png)
 
-#### 2.4 Turbo Pump - https://{api-url}/api/turbopump/launch
+#### 2.4 Turbo Pump - POST https://{api-url}/api/turbopump/launch
 
 Para el funcionamiento del `Kerosene` y él `LOX` tenemos una turbina y dos bombas conectadas que son las que bombean los
 diferentes combustibles. Esta bomba pone en marcha una turbina con él `throttle` al 100% donde las `rpm` irán incrementando
@@ -115,9 +103,67 @@ hasta `36000 rpm` con un resultado total de `hp` de `10000 hp`. Las `rpm` irán 
 con los `flowRate` del kerosene y lox, la fórmula es la siguiente: `lox flowRate` / `kerosene flowRate` = `ratio`, con 
 un margen de error de un 5%.
 
+La respuesta de este endpoint al finalizar los ajustes debe ser:
+```json
+{
+  "turbopump": {
+    "throttle": 1,
+    "rpm": 36000,
+    "hp": 10000
+  }
+}
+```
+
 ![img.png](img.png)
 
 ---
+
+### 3.0 Ascent
+
+En la fase de ascenso entran en marcha el GPS, INS y Gimbal.
+
+#### 3.1 GPS - POST https://{api-url}/api/gps/ascent
+
+El GPS recibirá las coordenadas destino y se sitúa en las siguientes coordenadas:
+
+##### Coordenadas actuales (las simulamos): 
+    **Latitude**	28.573469
+
+    **Longitude**	-80.651070
+
+##### Coordenadas de aterrizaje:
+
+    **Latitude** 28.775245058791235 
+
+    **Longitude** -77.38535548520339
+
+Se deben de hacer check que las coordenadas de destino están a menos de 350 km de radio.
+
+
+#### 3.2 Gimbal - POST https://{api-url}/api/gimbal/ascent
+
+Primero de todo, antes de implementar este micro servicio hay que entender que es `X Y Z` o `Roll, Pitch, Yaw` para el
+control de orientación de un cohete (ver imagen).
+
+![img_3.png](img_3.png)
+
+Para este endpoint usaremos `**Yaw** para corregir Latitude` y `**Pitch** para corregir Longitud`.
+El Gimbal debe funcionar de la siguiente manera, por cada diferencia entre coordenadas actuales y de aterrizaje se deberá
+aumentar `1º`, por ejemplo `Longitude -80.651070 y -77.38535548520339` el resultado será un `Yaw` de `3,26º`
+
+La respuesta de este endpoint al finalizar los ajustes debe ser:
+```json
+{
+  "gimbal": {
+    "roll": 0,
+    "pitch": 0,
+    "yaw": 3.26
+  }
+}
+```
+
+---
+
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first
