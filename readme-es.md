@@ -39,6 +39,9 @@ atributo `throttle` hay que ajustarlo al 100%.
 máxima si la cámara no se ha presurizado, tampoco podemos presurizar la cámara de golpe, cada `100 ms` debemos incrementar
 `100 psia` hasta llegar al valor de `2000`. Quiere decir que tardará `2 segundos` en `incrementar la presión de 0 a 2000`.
 
+Hay que tener en cuenta que tenemos 8 motores en comunicación con el cohete, en la parte de simulación con el Hardware
+del cohete tendremos una interfaz controlando 8 motores.
+
 La respuesta de este endpoint al finalizar los ajustes debe ser:
 ```json
 {
@@ -156,7 +159,8 @@ toda su circumferencia, en X Y Z tanto positivo como negativo.
 
 ![img_4.png](img_4.png)
 
-Hay que tener en cuenta que tenemos 8 motores, por lo tanto 8 Gimbal en comunicación con el cohete.
+Hay que tener en cuenta que tenemos 8 motores, por lo tanto 8 Gimbal en comunicación con el cohete (todos actúan en la
+misma posición a la vez).
 
 ![img_5.png](img_5.png)
 
