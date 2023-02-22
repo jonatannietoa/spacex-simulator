@@ -3,6 +3,21 @@
 El taller consiste en simular un cohete de SpaceX, en concreto un Falcon 9. Las físicas y controles de posición se han
 simplificado y son ficticios siguiendo un poco la lógica.
 
+Tendremos los siguientes micro servicios funcionando entre sí:
+
+- **falcon9**: Este repositorio es el principal que dará órdenes y enviará información al resto de MS.
+- **coldgasthusters**: Control del sistema de empuje mediante gas presurizado.
+- **engine**: Control de los 8 motores Merlin
+- **gimbal**: Control del sistema gimbal de los 8 motores Merlin
+- **gps**: Control del sistema de posicionamiento
+- **gridfins**: Control de las rejillas para estabilizar el cohete
+- **kerosene**: Control del sistema de Keroseno
+- **landinglegs**: Control de las 4 patas de aterrizaje
+- **lox**: Control del sistema de Oxígeno líquido
+- **payload**: Control de la carga que vamos a desplegar en el espacio
+- **secondstage**: Control de la segunda fase del cohete, que se separa y contiene el payload
+- **turbopump**: Control de la turbina y bombas para poder mezclar RP-1 y LOX
+
 ## Installation
 
 Para ejecutar en local: 
