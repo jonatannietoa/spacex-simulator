@@ -18,6 +18,11 @@ Tendremos los siguientes micro servicios funcionando entre sí:
 - **secondstage**: Control de la segunda fase del cohete, que se separa y contiene el payload
 - **turbopump**: Control de la turbina y bombas para poder mezclar RP-1 y LOX
 
+Controlaremos las diferentes fases de una misión del lanzamiento de un satélite starlink con un Falcon 9, como podemos
+ver en la siguiente imagen:
+
+![img.png](readme-img/Falcon_9_First_Stage_Reusability_Graphic.jpg)
+
 ## Installation
 
 Para ejecutar en local: 
