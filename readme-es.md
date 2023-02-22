@@ -1,8 +1,7 @@
 # Simulador SpaceX
 
-El taller consiste en simular un cohete de SpaceX, en concreto un Falcon 9. Las físicas y controles de posición son 
-totalmente ficticios siguiendo un poco la lógica, ya que harían todo más complicado, pero si alguien se anima a 
-colaborar bienvenido sea.
+El taller consiste en simular un cohete de SpaceX, en concreto un Falcon 9. Las físicas y controles de posición se han
+simplificado y son ficticios siguiendo un poco la lógica.
 
 ## Installation
 
