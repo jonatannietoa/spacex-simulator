@@ -20,6 +20,7 @@ public class StarlinkMissionService implements MissionService {
 
     @Override
     public MissionCommandModelOutput start() {
+        stateMachine.stopReactively().subscribe();
         stateMachine.startReactively().subscribe();
 
         return new MissionCommandModelOutput("Starlink Mission started.");
