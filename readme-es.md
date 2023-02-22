@@ -93,7 +93,7 @@ La respuesta de este endpoint al finalizar los ajustes debe ser:
 }
 ```
 
-![img_1.png](img_1.png)
+![img_1.png](readme-img/img_1.png)
 
 #### 2.4 Turbo Pump - POST https://{api-url}/api/turbopump/launch
 
@@ -116,7 +116,7 @@ La respuesta de este endpoint al finalizar los ajustes debe ser:
 }
 ```
 
-![img.png](img.png)
+![img.png](readme-img/img.png)
 
 ---
 
@@ -130,13 +130,10 @@ El GPS recibirá las coordenadas destino y se sitúa en las siguientes coordenad
 
 ##### Coordenadas actuales (las simulamos): 
     **Latitude**	28.573469
-
     **Longitude**	-80.651070
 
 ##### Coordenadas de aterrizaje:
-
-    **Latitude** 28.775245058791235 
-
+    **Latitude** 28.775245058791235
     **Longitude** -77.38535548520339
 
 Se deben de hacer check que las coordenadas de destino están a menos de 350 km de radio.
@@ -147,7 +144,7 @@ Se deben de hacer check que las coordenadas de destino están a menos de 350 km 
 Primero de todo, antes de implementar este micro servicio hay que entender que es `X Y Z` o `Roll, Pitch, Yaw` para el
 control de orientación de un cohete (ver imagen).
 
-![img_3.png](img_3.png)
+![img_3.png](readme-img/img_3.png)
 
 Para este endpoint usaremos `**Yaw** para corregir Latitude` y `**Pitch** para corregir Longitud`.
 El Gimbal debe funcionar de la siguiente manera, por cada diferencia entre coordenadas actuales y de aterrizaje se deberá
@@ -157,12 +154,12 @@ a la inversa `Longitude -77.38535548520339 y -80.651070` el resultado será un `
 **IMPORTANTE**: Se debe controlar que los 3 atributos no pueden pasar de los 20º, ya que es el giro máximo del motor en
 toda su circumferencia, en X Y Z tanto positivo como negativo.
 
-![img_4.png](img_4.png)
+![img_4.png](readme-img/img_4.png)
 
 Hay que tener en cuenta que tenemos 8 motores, por lo tanto 8 Gimbal en comunicación con el cohete (todos actúan en la
 misma posición a la vez).
 
-![img_5.png](img_5.png)
+![img_5.png](readme-img/img_5.png)
 
 La respuesta de este endpoint al finalizar los ajustes debe ser:
 ```json
@@ -179,7 +176,7 @@ La respuesta de este endpoint al finalizar los ajustes debe ser:
 
 ### 4.0 Stage separation
 
-![img_7.png](img_7.png)
+![img_7.png](readme-img/img_7.png)
 
 #### 4.1 Engine - POST https://{api-url}/api/engine/stage-separation
 
@@ -230,7 +227,7 @@ La respuesta de este endpoint al finalizar los ajustes debe ser:
 **IMPORTANTE**: Del JSON que recibe se debe controlar que en el `engine` su atributo `mode` este `OFF` y
 `throttle` al `0`.
 
-![img_9.png](img_9.png)
+![img_9.png](readme-img/img_9.png)
 
 
 #### 5.2 Gimbal - POST https://{api-url}/api/gimbal/flip-maneuver
@@ -334,6 +331,72 @@ La respuesta de este endpoint al finalizar los ajustes debe ser:
   }
 }
 ```
+
+---
+
+### 7.0 Grid fins deploy
+
+#### 7.1 Grid fins - POST https://{api-url}/api/gridfins/gridfinsdeploy
+
+En este endpoint se desplegarán las 4 Grid Fins, poniendo a `true` el atributo `deploy` en `ZMinus, ZPlus, YMinus e YPlus`,
+donde `Z` hace referencia `Yaw` e `Y` a `Pitch`.
+
+**IMPORTANTE**: Si la temperatura es mayor a `540` no se abrirán.
+
+La respuesta de este endpoint al finalizar los ajustes debe ser:
+```json
+{
+  "gridfins": [
+    {
+        "zminus": {
+          "deploy": true,
+          "temperature": 300,
+          "upDown": 0,
+          "leftRight": 0
+        }
+    },
+    {
+      "zplus": {
+        "deploy": true,
+        "temperature": 300,
+        "upDown": 0,
+        "leftRight": 0
+      }
+    },
+
+    {
+      "yminus": {
+        "deploy": true,
+        "temperature": 300,
+        "upDown": 0,
+        "leftRight": 0
+      }
+    },
+
+    {
+      "yplus": {
+        "deploy": true,
+        "temperature": 300,
+        "upDown": 0,
+        "leftRight": 0
+      }
+    }
+  ]
+}
+```
+---
+
+### 8.0 Entry Burn
+
+
+
+
+
+
+
+
+
+
 
 
 
