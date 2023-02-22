@@ -322,7 +322,7 @@ La respuesta de este endpoint al finalizar los ajustes debe ser:
 }
 ```
 
-#### 6.3 LOX Control - ```POST https://{api-url}/api/lox/boost-back-burn```
+#### 6.3 LOX Control - ```POST https://{api-url}/api/lox/boostbackburn```
 
 El control de oxígeno líquido primero de todo debe activar la `mainValve` y seguidamente comenzar a bombear hasta llegar a
 `fuelPumpPercentage` del 70 % con el valor `0.7`, donde él `flowRate` irá incrementando hasta `1343 kg/s` de combustible al 70%.
@@ -342,7 +342,7 @@ La respuesta de este endpoint al finalizar los ajustes debe ser:
 }
 ```
 
-#### 6.4 Turbo Pump - ```POST https://{api-url}/api/turbopump/boost-back-burn```
+#### 6.4 Turbo Pump - ```POST https://{api-url}/api/turbopump/boostbackburn```
 
 Para el funcionamiento del `Kerosene` y él `LOX` tenemos una turbina y dos bombas conectadas que son las que bombean los
 diferentes combustibles. Esta bomba pone en marcha una turbina con él `throttle` al 70% donde las `rpm` irán incrementando
@@ -434,7 +434,98 @@ La respuesta de este endpoint al finalizar los ajustes debe ser:
 
 ### 8.0 Entry Burn
 
-En esta 
+En esta `fase a 70 kms de altura` el cohete enciende los motores para la `reentrada`, esta se hace a `8000 km/h`.
+Debemos controlar el Falcon 9 de la siguiente manera.
+
+#### 8.1 Engine - ```POST https://{api-url}/api/engine/entryburn```
+
+El motor tiene que primero presurizar la cámara a `1472` psia y poner él `Mode` en `LIGHT`, esto quiere decir que el
+atributo `throttle` hay que ajustarlo al 70%.
+
+**IMPORTANTE**: No se puede ajustar él `Mode` y `throttle` a la potencia
+indicada si la cámara no se ha presurizado, tampoco podemos presurizar la cámara de golpe, cada `100 ms` debemos incrementar
+`300 psia` hasta llegar al valor de `1472`. Quiere decir que tardará unos `500 ms` en `incrementar la presión de 0 a 1472`.
+
+Hay que tener en cuenta que tenemos 8 motores en comunicación con el cohete, en la parte de simulación con el Hardware
+del cohete tendremos una interfaz controlando 8 motores.
+
+La respuesta de este endpoint al finalizar los ajustes debe ser:
+```json
+{
+  "engine": {
+    "mode": "FULL",
+    "throttle": 0.7,
+    "chamberPressure": 1472
+  }
+}
+```
+
+#### 8.2 Kerosene Control - ```POST https://{api-url}/api/kerosene/entryburn```
+
+El control de Keroseno primero de todo debe activar la `mainValve` y seguidamente comenzar a bombear hasta llegar a
+`fuelPumpPercentage` del 70 % con el valor `0.7`, donde él `flowRate` irá incrementando hasta `560 kg/s` de combustible al 100%.
+
+**IMPORTANTE**: No se puede ajustar él `fuelPumpPercentage` si la `mainValve` no está abierta. También debemos incrementar
+la potencia de bombeo `40 kg/s` cada `100 ms`.
+
+La respuesta de este endpoint al finalizar los ajustes debe ser:
+```json
+{
+  "kerosene": {
+    "mainValve": true,
+    "ratio": 2.4,
+    "fuelPumpPercentage": 0.7,
+    "flowRate": 560
+  }
+}
+```
+
+#### 8.3 LOX Control - ```POST https://{api-url}/api/lox/entryburn```
+
+El control de oxígeno líquido primero de todo debe activar la `mainValve` y seguidamente comenzar a bombear hasta llegar a
+`fuelPumpPercentage` del 70 % con el valor `0.7`, donde él `flowRate` irá incrementando hasta `1343 kg/s` de combustible al 70%.
+
+**IMPORTANTE**: No se puede ajustar él `loxPumpPercentage` si la `mainValve` no está abierta. También debemos incrementar
+la potencia de bombeo `95 kg/s` cada `100 ms`.
+
+La respuesta de este endpoint al finalizar los ajustes debe ser:
+```json
+{
+  "lox": {
+    "mainValve": true,
+    "ratio": 2.4,
+    "loxPumpPercentage": 0.7,
+    "flowRate": 1343
+  }
+}
+```
+
+#### 8.4 Turbo Pump - ```POST https://{api-url}/api/turbopump/entryburn```
+
+Para el funcionamiento del `Kerosene` y él `LOX` tenemos una turbina y dos bombas conectadas que son las que bombean los
+diferentes combustibles. Esta bomba pone en marcha una turbina con él `throttle` al 70% donde las `rpm` irán incrementando
+hasta `25200 rpm` con un resultado total de `hp` de `7000 hp`. Las `rpm` irán incrementando `1800 rpm` cada `100 ms`.
+
+**IMPORTANTE**: Del JSON recibido deberemos comprobar que él `ratio` tanto del `lox` cómo `kerosene` corresponden
+con los `flowRate` del kerosene y lox, la fórmula es la siguiente: `lox flowRate` / `kerosene flowRate` = `ratio`, con
+un margen de error de un 5%.
+
+La respuesta de este endpoint al finalizar los ajustes debe ser:
+```json
+{
+  "turbopump": {
+    "throttle": 0.7,
+    "rpm": 25200,
+    "hp": 7000
+  }
+}
+```
+---
+
+### 9.0 Aerodynamic Guidance
+
+![img.png](gridfins.gif)
+
 
 
 
