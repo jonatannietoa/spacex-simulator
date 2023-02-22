@@ -10,7 +10,15 @@ import com.spacexsimulator.falcon9.landinglegs.domain.LandingLegs;
 import com.spacexsimulator.falcon9.lox.domain.LOX;
 import com.spacexsimulator.falcon9.secondstage.domain.SecondStage;
 import com.spacexsimulator.falcon9.turbopump.domain.TurboPump;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Falcon9ActualStats {
     private ColdGasThrusters coldGasThrusters;
     private Engine engine;
