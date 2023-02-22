@@ -50,7 +50,7 @@ Se trata de que todos los micro servicios respondan con un mensaje de Health Che
 
 Se trata de la fase de lanzamiento, y los micro servicios que entran en marcha son los siguientes:
 
-#### 2.1 Engine - POST https://{api-url}/api/engine/launch
+#### 2.1 Engine - ```POST https://{api-url}/api/engine/launch```
 
 El motor tiene que primero presurizar la cámara a `2000` psia y poner él `Mode` en `FULL`, esto quiere decir que el 
 atributo `throttle` hay que ajustarlo al 100%. 
@@ -73,7 +73,7 @@ La respuesta de este endpoint al finalizar los ajustes debe ser:
 }
 ```
 
-#### 2.2 Kerosene Control - POST https://{api-url}/api/kerosene/launch
+#### 2.2 Kerosene Control - ```POST https://{api-url}/api/kerosene/launch```
 
 El control de Keroseno primero de todo debe activar la `mainValve` y seguidamente comenzar a bombear hasta llegar a 
 `fuelPumpPercentage` del 100 % con el valor `1`, donde él `flowRate` irá incrementando hasta `801 kg/s` de combustible al 100%.
@@ -93,7 +93,7 @@ La respuesta de este endpoint al finalizar los ajustes debe ser:
 }
 ```
 
-#### 2.3 LOX Control - POST https://{api-url}/api/lox/launch
+#### 2.3 LOX Control - ```POST https://{api-url}/api/lox/launch```
 
 El control de oxígeno líquido primero de todo debe activar la `mainValve` y seguidamente comenzar a bombear hasta llegar a
 `fuelPumpPercentage` del 100 % con el valor `1`, donde él `flowRate` irá incrementando hasta `1919 kg/s` de combustible al 100%.
@@ -115,7 +115,7 @@ La respuesta de este endpoint al finalizar los ajustes debe ser:
 
 ![img_1.png](readme-img/img_1.png)
 
-#### 2.4 Turbo Pump - POST https://{api-url}/api/turbopump/launch
+#### 2.4 Turbo Pump - ```POST https://{api-url}/api/turbopump/launch```
 
 Para el funcionamiento del `Kerosene` y él `LOX` tenemos una turbina y dos bombas conectadas que son las que bombean los
 diferentes combustibles. Esta bomba pone en marcha una turbina con él `throttle` al 100% donde las `rpm` irán incrementando
@@ -144,7 +144,7 @@ La respuesta de este endpoint al finalizar los ajustes debe ser:
 
 En la fase de ascenso entran en marcha el GPS, INS y Gimbal.
 
-#### 3.1 GPS - POST https://{api-url}/api/gps/ascent
+#### 3.1 GPS - ```POST https://{api-url}/api/gps/ascent```
 
 El GPS recibirá las coordenadas destino y se sitúa en las siguientes coordenadas:
 
@@ -159,7 +159,7 @@ El GPS recibirá las coordenadas destino y se sitúa en las siguientes coordenad
 Se deben de hacer check que las coordenadas de destino están a menos de 350 km de radio.
 
 
-#### 3.2 Gimbal - POST https://{api-url}/api/gimbal/ascent
+#### 3.2 Gimbal - ```POST https://{api-url}/api/gimbal/ascent```
 
 Primero de todo, antes de implementar este micro servicio hay que entender que es `X Y Z` o `Roll, Pitch, Yaw` para el
 control de orientación de un cohete (ver imagen).
@@ -198,12 +198,23 @@ La respuesta de este endpoint al finalizar los ajustes debe ser:
 
 ![img_7.png](readme-img/img_7.png)
 
-#### 4.1 Engine - POST https://{api-url}/api/engine/stage-separation
+#### 4.1 Engine - ```POST https://{api-url}/api/engine/stageseparation```
 
-El motor tiene que primero despresurizar la cámara a `0` psia y poner él `Mode` en `OFF`, esto quiere decir que el
+El motor tiene que primero despresurizar la cámara a `1000` psia y poner él `Mode` en `OFF`, esto quiere decir que el
 atributo `throttle` hay que ajustarlo al 0%. Se puede realizar directamente.
 
-#### 4.2 Second Stage - POST https://{api-url}/api/second-stage/stage-separation
+La respuesta de este endpoint al finalizar los ajustes debe ser:
+```json
+{
+  "engine": {
+    "mode": "OFF",
+    "throttle": 0,
+    "chamberPressure": 1000
+  }
+}
+```
+
+#### 4.2 Second Stage - ```POST https://{api-url}/api/secondstage/stageseparation```
 
 Debemos desacoplar la `Second Stage` del `Falcon 9` activando `enableSeparation` a true e informando al cohete. El `throttle`
 debe incrementar hasta él `100%` en `2000 ms`, pasados `3000 ms` después de activar `enableSeparation`.
@@ -220,7 +231,7 @@ https://www.youtube.com/watch?v=Vpsfy4npMhY
 Esta etapa se realiza seguida de la `Stage Separation` por eso los controles anteriores, ya que la maniobra de 
 giro del cohete debe estar sincronizada después para que no choque con él `Falcon 9`.
 
-#### 5.1 Cold Gas Thrusters - POST https://{api-url}/api/cold-gas-thrusters/flip-maneuver
+#### 5.1 Cold Gas Thrusters - ```POST https://{api-url}/api/coldgasthrusters/flipmaneuver```
 
 Se activará él `ColdGasThruster` `right` durante `13000 ms` y luego para compensar la maniobra él `ColdGasThruster` `left`
 `1000 ms`.
@@ -250,7 +261,7 @@ La respuesta de este endpoint al finalizar los ajustes debe ser:
 ![img_9.png](readme-img/img_9.png)
 
 
-#### 5.2 Gimbal - POST https://{api-url}/api/gimbal/flip-maneuver
+#### 5.2 Gimbal - ```POST https://{api-url}/api/gimbal/flipmaneuver```
 
 Reset de del Gimbal del `roll`, `pitch` y `yaw` a `0º`.
 
@@ -268,7 +279,7 @@ La respuesta de este endpoint al finalizar los ajustes debe ser:
 
 ### 6.0 Boost back burn
 
-#### 6.1 Engine - POST https://{api-url}/api/engine/boost-back-burn
+#### 6.1 Engine - ```POST https://{api-url}/api/engine/boostbackburn```
 
 El motor tiene que primero presurizar la cámara a `1472` psia y poner él `Mode` en `LIGHT`, esto quiere decir que el
 atributo `throttle` hay que ajustarlo al 70%.
@@ -291,7 +302,7 @@ La respuesta de este endpoint al finalizar los ajustes debe ser:
 }
 ```
 
-#### 6.2 Kerosene Control - POST https://{api-url}/api/kerosene/boost-back-burn
+#### 6.2 Kerosene Control - ```POST https://{api-url}/api/kerosene/boostbackburn```
 
 El control de Keroseno primero de todo debe activar la `mainValve` y seguidamente comenzar a bombear hasta llegar a
 `fuelPumpPercentage` del 70 % con el valor `0.7`, donde él `flowRate` irá incrementando hasta `560 kg/s` de combustible al 100%.
@@ -311,7 +322,7 @@ La respuesta de este endpoint al finalizar los ajustes debe ser:
 }
 ```
 
-#### 6.3 LOX Control - POST https://{api-url}/api/lox/boost-back-burn
+#### 6.3 LOX Control - ```POST https://{api-url}/api/lox/boost-back-burn```
 
 El control de oxígeno líquido primero de todo debe activar la `mainValve` y seguidamente comenzar a bombear hasta llegar a
 `fuelPumpPercentage` del 70 % con el valor `0.7`, donde él `flowRate` irá incrementando hasta `1343 kg/s` de combustible al 70%.
@@ -331,7 +342,7 @@ La respuesta de este endpoint al finalizar los ajustes debe ser:
 }
 ```
 
-#### 6.4 Turbo Pump - POST https://{api-url}/api/turbopump/boost-back-burn
+#### 6.4 Turbo Pump - ```POST https://{api-url}/api/turbopump/boost-back-burn```
 
 Para el funcionamiento del `Kerosene` y él `LOX` tenemos una turbina y dos bombas conectadas que son las que bombean los
 diferentes combustibles. Esta bomba pone en marcha una turbina con él `throttle` al 70% donde las `rpm` irán incrementando
@@ -356,7 +367,23 @@ La respuesta de este endpoint al finalizar los ajustes debe ser:
 
 ### 7.0 Grid fins deploy
 
-#### 7.1 Grid fins - POST https://{api-url}/api/gridfins/gridfinsdeploy
+#### 7.1 Engine - ```POST https://{api-url}/api/engine/gridfinsdeploy```
+
+El motor tiene que primero despresurizar la cámara a `1000` psia y poner él `Mode` en `OFF`, esto quiere decir que el
+atributo `throttle` hay que ajustarlo al 0%. Se puede realizar directamente.
+
+La respuesta de este endpoint al finalizar los ajustes debe ser:
+```json
+{
+  "engine": {
+    "mode": "OFF",
+    "throttle": 0,
+    "chamberPressure": 1000
+  }
+}
+```
+
+#### 7.2 Grid fins - ```POST https://{api-url}/api/gridfins/gridfinsdeploy```
 
 En este endpoint se desplegarán las 4 Grid Fins, poniendo a `true` el atributo `deploy` en `ZMinus, ZPlus, YMinus e YPlus`,
 donde `Z` hace referencia `Yaw` e `Y` a `Pitch`.
@@ -392,7 +419,6 @@ La respuesta de este endpoint al finalizar los ajustes debe ser:
         "leftRight": 0
       }
     },
-
     {
       "yplus": {
         "deploy": true,
@@ -408,6 +434,7 @@ La respuesta de este endpoint al finalizar los ajustes debe ser:
 
 ### 8.0 Entry Burn
 
+En esta 
 
 
 
