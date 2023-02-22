@@ -655,7 +655,7 @@ Haremos lo mismo que en el punto 6.3 LOX.
 Haremos lo mismo que en el punto 6.4 Turbo Pump.
 
 #### 10.7 Landing Legs - ```POST https://{api-url}/api/landinglegs/verticallanding```
-![img.png](img.png)
+![img.png](readme-img/landinglegs.png)
 
 Para abrir todas las patas del Falcon 9 debemos actualizar todos los atributos de las patas a true e informar al Falcon 9.
 
