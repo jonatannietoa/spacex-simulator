@@ -5,5 +5,5 @@ import com.spacexsimulator.falcon9.mission.application.commandmodel.MissionComma
 
 public interface MissionService {
 
-    MissionCommandModelOutput checkFalcon9(MissionCommandModelInput missionCommandModelInput);
+    MissionCommandModelOutput start();
 }
