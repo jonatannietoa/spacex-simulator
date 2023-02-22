@@ -7,5 +7,4 @@ public class Engine {
     private Percentage throttle;
     private Mode mode;
     private Integer chamberPressure;
-    private Gimbal gimbal;
 }
