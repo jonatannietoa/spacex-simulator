@@ -199,7 +199,6 @@ La respuesta de este endpoint al finalizar los ajustes debe ser:
 ![img_7.png](readme-img/img_7.png)
 
 #### 4.1 Engine - ```POST https://{api-url}/api/engine/stageseparation```
-
 El motor tiene que primero despresurizar la cámara a `1000` psia y poner él `Mode` en `OFF`, esto quiere decir que el
 atributo `throttle` hay que ajustarlo al 0%. Se puede realizar directamente.
 
@@ -223,6 +222,17 @@ https://www.youtube.com/watch?v=Vpsfy4npMhY
 **IMPORTANTE**: Del JSON que recibe se debe controlar que en el `engine` su atributo `mode` este `OFF` y 
 `throttle` al `0`.
 
+```json
+{
+  "secondstage": {
+    "enableSeparation": true,
+    "throttle": 1,
+    "fairingSeparation": false,
+    "payloadSeparation": false
+  }
+}
+```
+
 ---
 ### 5.0 Flip maneuver
 Esta etapa se realiza seguida de la `Stage Separation` por eso los controles anteriores, ya que la maniobra de 
@@ -231,6 +241,9 @@ giro del cohete debe estar sincronizada después para que no choque con él `Fal
 #### 5.1 Cold Gas Thrusters - ```POST https://{api-url}/api/coldgasthrusters/flipmaneuver```
 Se activará él `ColdGasThruster` `right` durante `13000 ms` y luego para compensar la maniobra él `ColdGasThruster` `left`
 `1000 ms`.
+
+**IMPORTANTE**: Del JSON que recibe se debe controlar que en el `engine` su atributo `mode` este `OFF` y
+`throttle` al `0`.
 
 La respuesta de este endpoint al finalizar los ajustes debe ser:
 
@@ -251,8 +264,6 @@ La respuesta de este endpoint al finalizar los ajustes debe ser:
 }
 
 ```
-**IMPORTANTE**: Del JSON que recibe se debe controlar que en el `engine` su atributo `mode` este `OFF` y
-`throttle` al `0`.
 
 ![img_9.png](readme-img/img_9.png)
 
