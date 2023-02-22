@@ -617,6 +617,7 @@ Haremos lo mismo que en el punto 9.1 pero con las nuevas coordenadas.
 Haremos lo mismo que en el punto 6.1 Engine.
 
 #### 10.3 Gimbal - ```POST https://{api-url}/api/gimbal/verticallanding```
+Haremos lo mismo que en el punto 3.2 Gimbal.
 
 #### 10.4 Kerosene - ```POST https://{api-url}/api/kerosene/verticallanding```
 Haremos lo mismo que en el punto 6.2 Kerosene.
