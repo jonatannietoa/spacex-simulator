@@ -90,7 +90,13 @@ public class StarlinkStateMachine extends EnumStateMachineConfigurerAdapter<Miss
                     .source(MissionStates.LANDED_CHECKS).target(MissionStates.FAIRING_SEPARATION).event(MissionEvents.SUCCESS).action(new FairingSeparation())
                     .and()
                 .withExternal()
-                    .source(MissionStates.FAIRING_SEPARATION).target(MissionStates.PAYLOAD_SEPARATION).event(MissionEvents.SUCCESS).action(new PayloadSeparation());
+                    .source(MissionStates.FAIRING_SEPARATION).target(MissionStates.PAYLOAD_SEPARATION).event(MissionEvents.SUCCESS).action(new PayloadSeparation())
+        ;
+
+        // common error transitions
+        for (var state : EnumSet.allOf(MissionStates.class)) {
+            transitions.withExternal().source(state).target(MissionStates.DESTROY).event(MissionEvents.FAILURE).action(new Destroy());
+        }
     }
 
 }
