@@ -36,11 +36,16 @@ Para ejecutar en local:
 
 ### 1.0 Check
 Se trata de que todos los micro servicios respondan con un mensaje de Health Check, el micro servicio principal
-(este proyecto) espera la siguiente respuesta:
+(este proyecto) espera los valores por defecto de todos los campos:
+
+Por ejemplo del Health Check del motor será:
 ```json
 {
-  "target": "Nombre micro servicio, por ejemplo 'engine'",
-  "status": "Healthy"
+  "engine": {
+    "mode": "OFF",
+    "throttle": 0,
+    "chamberPressure": 0
+  }
 }
 ```
 ---
