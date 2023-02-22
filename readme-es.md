@@ -606,12 +606,11 @@ Haremos lo mismo que en el punto 6.3 LOX.
 #### 10.6 LOX - ```POST https://{api-url}/api/turbopump/verticallanding```
 Haremos lo mismo que en el punto 6.4 Turbo Pump.
 
-#### 10.7 Cold Gas - ```POST https://{api-url}/api/coldgasthrusters/flipmaneuver```
+#### 10.7 Cold Gas - ```POST https://{api-url}/api/coldgasthrusters/verticallanding```
 
 Se activará él `ColdGasThruster` `right` y `left` durante `5000 ms` para vaciar el gas restante.
 
 La respuesta de este endpoint al finalizar los ajustes debe ser:
-
 ```json
 {
   "coldgasthusters": [
@@ -630,6 +629,24 @@ La respuesta de este endpoint al finalizar los ajustes debe ser:
 ```
 
 ![img.png](readme-img/coldgas-landed.png)
+
+
+#### 10.8 Landing Legs - ```POST https://{api-url}/api/landinglegs/verticallanding```
+![img.png](img.png)
+
+Para abrir todas las patas del Falcon 9 debemos actualizar todos los atributos de las patas a true e informar al Falcon 9.
+
+La respuesta de este endpoint al finalizar los ajustes debe ser:
+```json
+{
+  "landinglegs": {
+    "Leg0": true,
+    "Leg90": true,
+    "Leg180": true,
+    "Leg270": false
+  }
+}
+```
 
 ---
 ### 11.0 Fairing separation - ```POST https://{api-url}/api/secondstage/fairingseparation```
