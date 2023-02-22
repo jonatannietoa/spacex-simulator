@@ -34,7 +34,7 @@ public class StarlinkStateMachine extends EnumStateMachineConfigurerAdapter<Miss
     public void configure(StateMachineConfigurationConfigurer<MissionStates, MissionEvents> config) throws Exception {
         // STATE MACHINE CONFIG
         config.withConfiguration()
-                .autoStartup(true)
+                .autoStartup(false)
                 .listener(listener());
     }
 

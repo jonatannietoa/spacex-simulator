@@ -1,6 +1,5 @@
 package com.spacexsimulator.falcon9.lox.domain;
 
-import com.spacexsimulator.falcon9.turbopump.domain.TurboPump;
 import jdk.jfr.Percentage;
 
 public class LOX {
