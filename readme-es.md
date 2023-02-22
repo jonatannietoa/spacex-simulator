@@ -604,27 +604,51 @@ La respuesta de este endpoint al finalizar los ajustes debe ser:
   ]
 }
 ```
-
-
-
-
 ---
 
 ### 10.0 Vertical Landing
 
 ![img.png](readme-img/gridfin_animation2.gif)
 
+#### 10.1 Grid fins - ```POST https://{api-url}/api/gridfins/verticallanding```
+Haremos lo mismo que en el punto 9.1 pero con las nuevas coordenadas.
 
+#### 10.2 Engine - ```POST https://{api-url}/api/engine/verticallanding```
+Haremos lo mismo que en el punto 6.1 Engine.
 
+#### 10.3 Kerosene - ```POST https://{api-url}/api/kerosene/verticallanding```
+Haremos lo mismo que en el punto 6.2 Kerosene.
 
+#### 10.4 LOX - ```POST https://{api-url}/api/lox/verticallanding```
+Haremos lo mismo que en el punto 6.3 LOX.
 
+#### 10.5 LOX - ```POST https://{api-url}/api/turbopump/verticallanding```
+Haremos lo mismo que en el punto 6.4 Turbo Pump.
 
+#### 10.6 Cold Gas - ```POST https://{api-url}/api/coldgasthrusters/flipmaneuver```
 
+Se activará él `ColdGasThruster` `right` y `left` durante `5000 ms` para vaciar el gas restante.
 
+La respuesta de este endpoint al finalizar los ajustes debe ser:
 
+```json
+{
+  "coldgasthusters": [
+    {
+      "right": {
+        "thrust": 1,
+        "secondsOfThrust": 5
+      },
+      "left": {
+        "thrust": 1,
+        "secondsOfThrust": 5
+      }
+    }
+  ]
+}
+```
 
-
-
+![img.png](readme-img/coldgas-landed.png)
 
 ---
 
