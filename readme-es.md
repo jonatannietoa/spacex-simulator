@@ -158,6 +158,17 @@ El GPS recibirá las coordenadas destino y se sitúa en las siguientes coordenad
 
 Se deben de hacer check que las coordenadas de destino están a menos de 350 km de radio.
 
+La respuesta de este endpoint al finalizar los ajustes debe ser:
+```json
+{
+  "gps": {
+    "actualLatitude": 28.573469,
+    "actualLongitude": -80.651070,
+    "targetLatitude": 28.775245058791235,
+    "targetLongitude": -77.38535548520339
+  }
+}
+```
 
 #### 3.2 Gimbal - ```POST https://{api-url}/api/gimbal/ascent```
 
@@ -524,7 +535,84 @@ La respuesta de este endpoint al finalizar los ajustes debe ser:
 
 ### 9.0 Aerodynamic Guidance
 
-![img.png](gridfins.gif)
+![img.png](readme-img/181205-spacex-mn-1440.webp)
+
+Esta fase debemos controlar él `Yaw (Z)` y `Pitch (Y)` del Falcon 9 de la siguiente manera:
+
+#### 9.1 Grid fins - ```POST https://{api-url}/api/gridfins/aerodynamicguidance```
+
+Leeremos las coordenadas de GPS recibidas en el Body de la petición, que llegarán de la siguiente manera:
+
+```json
+{
+  "gps": {
+    "actualLatitude": 28.573469,
+    "actualLongitude": -80.651070,
+    "targetLatitude": 28.775245058791235,
+    "targetLongitude": -77.38535548520339
+  }
+}
+```
+
+En este endpoint se desplegarán las 4 Grid Fins, poniendo a `true` el atributo `deploy` en `ZMinus, ZPlus, YMinus e YPlus`,
+donde `Z` hace referencia `Yaw` e `Y` a `Pitch`.
+
+`Y` hará referencia a `Latitude` y `Z` hará referencia a `Longitude`, pasaremos los valores de coordenadas a un número
+con el valor decimal en el punto de la coordenada y calculando con la siguiente fórmula los grados de cada Grid fin:
+
+```
+ZMinus = (-80,651070) - (-77,38535548520339) = -3,26 degrees
+ZPlus = Invertida a ZMinus = 3,26 degrees
+
+YMinus = (28,573469) - (28,775245058791235) = -0,20 degrees
+YPlus = Invertida a YMinus = 0,20 degrees
+```
+
+La respuesta de este endpoint al finalizar los ajustes debe ser:
+```json
+{
+  "gridfins": [
+    {
+        "zminus": {
+          "deploy": true,
+          "temperature": 300,
+          "leftRight": -3.26
+        }
+    },
+    {
+      "zplus": {
+        "deploy": true,
+        "temperature": 300,
+        "leftRight": 3.26
+      }
+    },
+
+    {
+      "yminus": {
+        "deploy": true,
+        "temperature": 300,
+        "leftRight": -0.20
+      }
+    },
+    {
+      "yplus": {
+        "deploy": true,
+        "temperature": 300,
+        "leftRight": 0.20
+      }
+    }
+  ]
+}
+```
+
+
+
+
+---
+
+### 10.0 Vertical Landing
+
+![img.png](readme-img/gridfin_animation2.gif)
 
 
 

@@ -7,8 +7,6 @@ public class GridFin {
     // Close if temperature > 540 ºC
     private Integer temperature;
 
-    private FinDegree upDown;
-
     private FinDegree leftRight;
 
 }
