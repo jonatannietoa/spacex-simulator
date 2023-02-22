@@ -213,6 +213,54 @@ La respuesta de este endpoint al finalizar los ajustes debe ser:
 }
 ```
 
+#### 4.2 Kerosene Control - ```POST https://{api-url}/api/kerosene/boostbackburn```
+El control de Keroseno primero de todo debe desactivar la `mainValve` y seguidamente parar de y pasar
+`fuelPumpPercentage` al 0 % con el valor `0`, donde él `flowRate` pasa a `0`.
+
+La respuesta de este endpoint al finalizar los ajustes debe ser:
+```json
+{
+  "kerosene": {
+    "mainValve": false,
+    "ratio": 2.4,
+    "fuelPumpPercentage": 0,
+    "flowRate": 0
+  }
+}
+```
+
+#### 4.3 LOX Control - ```POST https://{api-url}/api/lox/boostbackburn```
+El control de LOX primero de todo debe desactivar la `mainValve` y seguidamente parar de y pasar
+`loxPumpPercentage` al 0 % con el valor `0`, donde él `flowRate` pasa a `0`.
+
+La respuesta de este endpoint al finalizar los ajustes debe ser:
+```json
+{
+  "lox": {
+    "mainValve": false,
+    "ratio": 2.4,
+    "loxPumpPercentage": 0,
+    "flowRate": 0
+  }
+}
+```
+
+#### 4.4 Turbo Pump - ```POST https://{api-url}/api/turbopump/boostbackburn```
+Para el funcionamiento del `Kerosene` y él `LOX` tenemos una turbina y dos bombas conectadas que son las que bombean los
+diferentes combustibles. Esta bomba se debe desactivar con él `throttle` al 0% donde las `rpm` disminuyen hasta `0 rpm` 
+con un resultado total de `hp` de `0 hp`.
+
+La respuesta de este endpoint al finalizar los ajustes debe ser:
+```json
+{
+  "turbopump": {
+    "throttle": 0,
+    "rpm": 0,
+    "hp": 0
+  }
+}
+```
+
 #### 4.2 Second Stage - ```POST https://{api-url}/api/secondstage/stageseparation```
 Debemos desacoplar la `Second Stage` del `Falcon 9` activando `enableSeparation` a true e informando al cohete. El `throttle`
 debe incrementar hasta él `100%` en `2000 ms`, pasados `3000 ms` después de activar `enableSeparation`.
@@ -606,8 +654,86 @@ Haremos lo mismo que en el punto 6.3 LOX.
 #### 10.6 LOX - ```POST https://{api-url}/api/turbopump/verticallanding```
 Haremos lo mismo que en el punto 6.4 Turbo Pump.
 
-#### 10.7 Cold Gas - ```POST https://{api-url}/api/coldgasthrusters/verticallanding```
+#### 10.7 Landing Legs - ```POST https://{api-url}/api/landinglegs/verticallanding```
+![img.png](img.png)
 
+Para abrir todas las patas del Falcon 9 debemos actualizar todos los atributos de las patas a true e informar al Falcon 9.
+
+La respuesta de este endpoint al finalizar los ajustes debe ser:
+```json
+{
+  "landinglegs": {
+    "Leg0": true,
+    "Leg90": true,
+    "Leg180": true,
+    "Leg270": false
+  }
+}
+```
+
+---
+### 11.0 Landed
+
+#### 11.1 Grid fins - ```POST https://{api-url}/api/gridfins/landed```
+Cerraremos las Grid Fins.
+
+La respuesta de este endpoint al finalizar los ajustes debe ser:
+```json
+{
+  "gridfins": [
+    {
+        "zminus": {
+          "deploy": false,
+          "temperature": 20,
+          "upDown": 0,
+          "leftRight": 0
+        }
+    },
+    {
+      "zplus": {
+        "deploy": false,
+        "temperature": 20,
+        "upDown": 0,
+        "leftRight": 0
+      }
+    },
+
+    {
+      "yminus": {
+        "deploy": false,
+        "temperature": 20,
+        "upDown": 0,
+        "leftRight": 0
+      }
+    },
+    {
+      "yplus": {
+        "deploy": false,
+        "temperature": 20,
+        "upDown": 0,
+        "leftRight": 0
+      }
+    }
+  ]
+}
+```
+
+#### 11.2 Engine - ```POST https://{api-url}/api/engine/landed```
+Haremos lo mismo que en el punto 4.1 Engine.
+
+#### 11.3 Gimbal - ```POST https://{api-url}/api/gimbal/landed```
+Haremos lo mismo que en el punto 5.2 Gimbal.
+
+#### 11.4 Kerosene - ```POST https://{api-url}/api/kerosene/landed```
+Haremos lo mismo que en el punto 4.2 Kerosene.
+
+#### 11.5 LOX - ```POST https://{api-url}/api/lox/landed```
+Haremos lo mismo que en el punto 4.3 LOX.
+
+#### 11.6 LOX - ```POST https://{api-url}/api/turbopump/landed```
+Haremos lo mismo que en el punto 4.4 Turbo Pump.
+
+#### 11.7 Cold Gas - ```POST https://{api-url}/api/coldgasthrusters/landed```
 Se activará él `ColdGasThruster` `right` y `left` durante `5000 ms` para vaciar el gas restante.
 
 La respuesta de este endpoint al finalizar los ajustes debe ser:
@@ -630,26 +756,8 @@ La respuesta de este endpoint al finalizar los ajustes debe ser:
 
 ![img.png](readme-img/coldgas-landed.png)
 
-
-#### 10.8 Landing Legs - ```POST https://{api-url}/api/landinglegs/verticallanding```
-![img.png](img.png)
-
-Para abrir todas las patas del Falcon 9 debemos actualizar todos los atributos de las patas a true e informar al Falcon 9.
-
-La respuesta de este endpoint al finalizar los ajustes debe ser:
-```json
-{
-  "landinglegs": {
-    "Leg0": true,
-    "Leg90": true,
-    "Leg180": true,
-    "Leg270": false
-  }
-}
-```
-
 ---
-### 11.0 Fairing separation - ```POST https://{api-url}/api/secondstage/fairingseparation```
+### 12.0 Fairing separation - ```POST https://{api-url}/api/secondstage/fairingseparation```
 Cambiaremos el atributo `fairingSeparation` e informaremos al Hardware del second stage. Devolveremos el siguiente json:
 
 ```json
