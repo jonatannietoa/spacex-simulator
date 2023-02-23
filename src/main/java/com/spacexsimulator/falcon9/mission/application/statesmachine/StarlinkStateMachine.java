@@ -1,6 +1,9 @@
 package com.spacexsimulator.falcon9.mission.application.statesmachine;
 
+import com.spacexsimulator.falcon9.mission.application.services.MissionService;
 import com.spacexsimulator.falcon9.mission.application.statesservices.falcon9.*;
+import com.spacexsimulator.falcon9.mission.domain.Falcon9ActualStats;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +22,15 @@ import java.util.EnumSet;
 @ComponentScan
 @EnableStateMachine
 public class StarlinkStateMachine extends EnumStateMachineConfigurerAdapter<MissionStates, MissionEvents> {
+
+    private Falcon9ActualStats falcon9ActualStatsSingleton;
+    private MissionService missionService;
+
+    @Autowired
+    public StarlinkStateMachine(Falcon9ActualStats falcon9ActualStatsSingleton, MissionService missionService) {
+        this.falcon9ActualStatsSingleton = falcon9ActualStatsSingleton;
+        this.missionService = missionService;
+    }
 
     @Bean
     public StateMachineListener<MissionStates, MissionEvents> listener() {
@@ -44,7 +56,7 @@ public class StarlinkStateMachine extends EnumStateMachineConfigurerAdapter<Miss
         states
                 .withStates()
                     .initial(MissionStates.CHECK)
-                    .state(MissionStates.CHECK, new Check(), null)
+                    .state(MissionStates.CHECK, new Check(falcon9ActualStatsSingleton, missionService), null)
                     .states(EnumSet.allOf(MissionStates.class))
         ;
     }

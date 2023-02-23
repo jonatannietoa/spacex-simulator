@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Scope;
 
 @Configuration
 public class MissionConfiguration {
-    @Bean
+    @Bean(name="falcon9ActualStatsSingleton")
     @Scope("singleton")
     public Falcon9ActualStats falcon9ActualStatsSingleton() {
         return new Falcon9ActualStats();
