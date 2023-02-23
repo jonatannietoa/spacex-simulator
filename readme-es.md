@@ -34,7 +34,7 @@ Para ejecutar en local:
 
 ## Fases de la misión
 
-### 1.0 Check
+### 1.0 Check - ```GET https://{api-url}/api/{microservice}/check```
 Se trata de que todos los micro servicios respondan con un mensaje de Health Check, el micro servicio principal
 (este proyecto) espera los valores por defecto de todos los campos:
 
