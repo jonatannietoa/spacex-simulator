@@ -14,29 +14,29 @@ import org.springframework.statemachine.action.Action;
 import reactor.core.publisher.Mono;
 
 public class Check implements Action<MissionStates, MissionEvents> {
-    Logger logger = LoggerFactory.getLogger(Check.class);
+  Logger logger = LoggerFactory.getLogger(Check.class);
 
-    private Falcon9ActualStats falcon9ActualStatsSingleton;
-    private MissionService checkService;
+  private Falcon9ActualStats falcon9ActualStatsSingleton;
+  private MissionService checkService;
 
-    public Check(Falcon9ActualStats falcon9ActualStatsSingleton, MissionService checkService) {
-        this.falcon9ActualStatsSingleton = falcon9ActualStatsSingleton;
-        this.checkService = checkService;
+  public Check(Falcon9ActualStats falcon9ActualStatsSingleton, MissionService checkService) {
+    this.falcon9ActualStatsSingleton = falcon9ActualStatsSingleton;
+    this.checkService = checkService;
+  }
+
+  @Override
+  public void execute(StateContext<MissionStates, MissionEvents> context) {
+    logger.info("** Falcon 9 ** Checking");
+    Message<MissionEvents> event;
+
+    try {
+      checkService.check();
+      event = MessageBuilder.withPayload(MissionEvents.SUCCESS).build();
+    } catch (CheckException e) {
+      logger.error("** Falcon 9 ** " + e.getMessage());
+      event = MessageBuilder.withPayload(MissionEvents.FAILURE).build();
     }
 
-    @Override
-    public void execute(StateContext<MissionStates, MissionEvents> context) {
-        logger.info("** Falcon 9 ** Checking");
-        Message<MissionEvents> event;
-
-        try {
-            checkService.check();
-            event = MessageBuilder.withPayload(MissionEvents.SUCCESS).build();
-        } catch (CheckException e) {
-            logger.error("** Falcon 9 ** " + e.getMessage());
-            event = MessageBuilder.withPayload(MissionEvents.FAILURE).build();
-        }
-
-        context.getStateMachine().sendEvent(Mono.just(event)).subscribe();
-    }
+    context.getStateMachine().sendEvent(Mono.just(event)).subscribe();
+  }
 }

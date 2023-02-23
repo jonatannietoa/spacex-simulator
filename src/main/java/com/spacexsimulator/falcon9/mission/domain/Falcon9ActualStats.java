@@ -20,14 +20,14 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Falcon9ActualStats {
-    private ColdGasThrusters coldGasThrusters;
-    private Engine engine;
-    private Gimbal gimbal;
-    private GPS gps;
-    private GridFins gridFins;
-    private Kerosene kerosene;
-    private LandingLegs landingLegs;
-    private LOX lox;
-    private SecondStage secondStage;
-    private TurboPump turboPump;
+  private ColdGasThrusters coldGasThrusters;
+  private Engine engine;
+  private Gimbal gimbal;
+  private GPS gps;
+  private GridFins gridFins;
+  private Kerosene kerosene;
+  private LandingLegs landingLegs;
+  private LOX lox;
+  private SecondStage secondStage;
+  private TurboPump turboPump;
 }

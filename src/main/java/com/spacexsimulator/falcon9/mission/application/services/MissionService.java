@@ -4,5 +4,5 @@ import com.spacexsimulator.falcon9.mission.application.exceptions.CheckException
 import com.spacexsimulator.falcon9.mission.domain.Falcon9ActualStats;
 
 public interface MissionService {
-    Falcon9ActualStats check() throws CheckException;
+  Falcon9ActualStats check() throws CheckException;
 }

@@ -9,15 +9,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class Falcon9ColdGasThrustersService implements ColdGasThrustersService {
 
-    private final ColdGasThrustersApi coldGasThrustersApi;
+  private final ColdGasThrustersApi coldGasThrustersApi;
 
-    @Autowired
-    public Falcon9ColdGasThrustersService(ColdGasThrustersApi coldGasThrustersApi) {
-        this.coldGasThrustersApi = coldGasThrustersApi;
-    }
+  @Autowired
+  public Falcon9ColdGasThrustersService(ColdGasThrustersApi coldGasThrustersApi) {
+    this.coldGasThrustersApi = coldGasThrustersApi;
+  }
 
-    @Override
-    public ColdGasThrustersCommandModelOutput check() throws ColdGasThrustersException {
-        return coldGasThrustersApi.getColdGasThrusters("/check");
-    }
+  @Override
+  public ColdGasThrustersCommandModelOutput check() throws ColdGasThrustersException {
+    return coldGasThrustersApi.getColdGasThrusters("/check");
+  }
 }

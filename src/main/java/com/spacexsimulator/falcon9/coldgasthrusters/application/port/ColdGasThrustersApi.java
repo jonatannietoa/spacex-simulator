@@ -6,9 +6,8 @@ import com.spacexsimulator.falcon9.mission.domain.Falcon9ActualStats;
 
 public interface ColdGasThrustersApi {
   ColdGasThrustersCommandModelOutput getColdGasThrusters(String uri)
-          throws ColdGasThrustersException;
-
-  ColdGasThrustersCommandModelOutput postColdGasThrusters(Falcon9ActualStats falcon9ActualStats, String uri)
       throws ColdGasThrustersException;
 
+  ColdGasThrustersCommandModelOutput postColdGasThrusters(
+      Falcon9ActualStats falcon9ActualStats, String uri) throws ColdGasThrustersException;
 }

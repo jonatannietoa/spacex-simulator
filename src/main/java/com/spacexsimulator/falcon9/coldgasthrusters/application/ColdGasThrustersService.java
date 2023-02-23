@@ -4,5 +4,5 @@ import com.spacexsimulator.falcon9.coldgasthrusters.application.commandmodel.Col
 import com.spacexsimulator.falcon9.coldgasthrusters.domain.exceptions.ColdGasThrustersException;
 
 public interface ColdGasThrustersService {
-    ColdGasThrustersCommandModelOutput check() throws ColdGasThrustersException;
+  ColdGasThrustersCommandModelOutput check() throws ColdGasThrustersException;
 }

@@ -10,18 +10,18 @@ import org.springframework.stereotype.Service;
 @Service("starlink-mission")
 public class StarlinkMissionService implements MissionService {
 
-    private StateMachine<MissionStates, MissionEvents> stateMachine;
+  private StateMachine<MissionStates, MissionEvents> stateMachine;
 
-    @Autowired
-    public StarlinkMissionService(StateMachine<MissionStates, MissionEvents> stateMachine) {
-        this.stateMachine = stateMachine;
-    }
+  @Autowired
+  public StarlinkMissionService(StateMachine<MissionStates, MissionEvents> stateMachine) {
+    this.stateMachine = stateMachine;
+  }
 
-    @Override
-    public MissionCommandModelOutput start() {
-        stateMachine.stopReactively().subscribe();
-        stateMachine.startReactively().subscribe();
+  @Override
+  public MissionCommandModelOutput start() {
+    stateMachine.stopReactively().subscribe();
+    stateMachine.startReactively().subscribe();
 
-        return new MissionCommandModelOutput("Starlink Mission started.");
-    }
+    return new MissionCommandModelOutput("Starlink Mission started.");
+  }
 }

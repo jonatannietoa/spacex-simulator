@@ -2,11 +2,10 @@ package com.spacexsimulator.falcon9.gridfins.domain;
 
 public class GridFin {
 
-    private Boolean deploy;
+  private Boolean deploy;
 
-    // Close if temperature > 540 ºC
-    private Integer temperature;
+  // Close if temperature > 540 ºC
+  private Integer temperature;
 
-    private FinDegree leftRight;
-
+  private FinDegree leftRight;
 }

@@ -5,6 +5,5 @@ import lombok.Getter;
 
 @AllArgsConstructor
 public class MissionCommandModelOutput {
-    @Getter
-    private String message;
+  @Getter private String message;
 }

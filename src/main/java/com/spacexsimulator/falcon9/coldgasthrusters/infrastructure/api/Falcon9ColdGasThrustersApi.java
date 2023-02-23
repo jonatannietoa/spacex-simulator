@@ -20,25 +20,27 @@ public class Falcon9ColdGasThrustersApi implements ColdGasThrustersApi {
   private final WebClient webClient;
 
   @Autowired
-  public Falcon9ColdGasThrustersApi(Environment env, WebClient webClient, ObjectMapper objectMapper) {
+  public Falcon9ColdGasThrustersApi(
+      Environment env, WebClient webClient, ObjectMapper objectMapper) {
     this.env = env;
     this.objectMapper = objectMapper;
     this.webClient = webClient;
   }
 
   @Override
-  public ColdGasThrustersCommandModelOutput getColdGasThrusters(String uri) throws ColdGasThrustersException {
+  public ColdGasThrustersCommandModelOutput getColdGasThrusters(String uri)
+      throws ColdGasThrustersException {
     String requestURI = this.env.getProperty("spacex.falcon9.coldgasthrusters.api") + uri;
     try {
       Object response =
-              webClient
-                      .get()
-                      .uri(requestURI)
-                      .accept(MediaType.APPLICATION_JSON)
-                      .retrieve()
-                      .bodyToMono(Object.class)
-                      .log()
-                      .block();
+          webClient
+              .get()
+              .uri(requestURI)
+              .accept(MediaType.APPLICATION_JSON)
+              .retrieve()
+              .bodyToMono(Object.class)
+              .log()
+              .block();
       return objectMapper.convertValue(response, ColdGasThrustersCommandModelOutput.class);
     } catch (Exception e) {
       throw new ColdGasThrustersException(e.getMessage());
@@ -46,20 +48,21 @@ public class Falcon9ColdGasThrustersApi implements ColdGasThrustersApi {
   }
 
   @Override
-  public ColdGasThrustersCommandModelOutput postColdGasThrusters(Falcon9ActualStats falcon9ActualStats, String uri) throws ColdGasThrustersException {
+  public ColdGasThrustersCommandModelOutput postColdGasThrusters(
+      Falcon9ActualStats falcon9ActualStats, String uri) throws ColdGasThrustersException {
     String requestURI = this.env.getProperty("spacex.falcon9.coldgasthrusters.api") + uri;
     try {
       Object response =
-              webClient
-                      .post()
-                      .uri(requestURI)
-                      .contentType(MediaType.APPLICATION_JSON)
-                      .bodyValue(falcon9ActualStats)
-                      .accept(MediaType.APPLICATION_JSON)
-                      .retrieve()
-                      .bodyToMono(Object.class)
-                      .log()
-                      .block();
+          webClient
+              .post()
+              .uri(requestURI)
+              .contentType(MediaType.APPLICATION_JSON)
+              .bodyValue(falcon9ActualStats)
+              .accept(MediaType.APPLICATION_JSON)
+              .retrieve()
+              .bodyToMono(Object.class)
+              .log()
+              .block();
       return objectMapper.convertValue(response, ColdGasThrustersCommandModelOutput.class);
     } catch (Exception e) {
       throw new ColdGasThrustersException(e.getMessage());

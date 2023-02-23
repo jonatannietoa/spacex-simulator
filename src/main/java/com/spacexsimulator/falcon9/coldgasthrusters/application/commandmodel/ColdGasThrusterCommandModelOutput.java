@@ -12,7 +12,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ColdGasThrusterCommandModelOutput {
-    private Double thrust;
-    private Integer secondsOfThrust;
-
+  private Double thrust;
+  private Integer secondsOfThrust;
 }

@@ -1,6 +1,5 @@
 package com.spacexsimulator.falcon9.mission.application.statesservices.falcon9;
 
-
 import com.spacexsimulator.falcon9.mission.application.statesmachine.MissionEvents;
 import com.spacexsimulator.falcon9.mission.application.statesmachine.MissionStates;
 import org.slf4j.Logger;
@@ -12,13 +11,13 @@ import org.springframework.statemachine.action.Action;
 import reactor.core.publisher.Mono;
 
 public class BoostBackBurn implements Action<MissionStates, MissionEvents> {
-    Logger logger = LoggerFactory.getLogger(BoostBackBurn.class);
+  Logger logger = LoggerFactory.getLogger(BoostBackBurn.class);
 
-    @Override
-    public void execute(StateContext<MissionStates, MissionEvents> context) {
-        logger.info("** Falcon 9 ** Engines to boosting back mode");
+  @Override
+  public void execute(StateContext<MissionStates, MissionEvents> context) {
+    logger.info("** Falcon 9 ** Engines to boosting back mode");
 
-        Message<MissionEvents> event = MessageBuilder.withPayload(MissionEvents.SUCCESS).build();
-        context.getStateMachine().sendEvent(Mono.just(event)).subscribe();
-    }
+    Message<MissionEvents> event = MessageBuilder.withPayload(MissionEvents.SUCCESS).build();
+    context.getStateMachine().sendEvent(Mono.just(event)).subscribe();
+  }
 }

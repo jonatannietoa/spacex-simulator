@@ -9,10 +9,10 @@ import org.springframework.statemachine.action.Action;
 
 public class Destroy implements Action<MissionStates, MissionEvents> {
 
-    Logger logger = LoggerFactory.getLogger(Destroy.class);
+  Logger logger = LoggerFactory.getLogger(Destroy.class);
 
-    @Override
-    public void execute(StateContext<MissionStates, MissionEvents> context) {
-        logger.error("** Falcon 9 ** Destroying (System Failure)");
-    }
+  @Override
+  public void execute(StateContext<MissionStates, MissionEvents> context) {
+    logger.error("** Falcon 9 ** Destroying (System Failure)");
+  }
 }

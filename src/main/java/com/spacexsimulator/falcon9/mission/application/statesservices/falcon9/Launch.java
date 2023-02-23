@@ -12,13 +12,13 @@ import reactor.core.publisher.Mono;
 
 public class Launch implements Action<MissionStates, MissionEvents> {
 
-    Logger logger = LoggerFactory.getLogger(Launch.class);
+  Logger logger = LoggerFactory.getLogger(Launch.class);
 
-    @Override
-    public void execute(StateContext<MissionStates, MissionEvents> context) {
-        logger.info("** Falcon 9 ** Launching");
+  @Override
+  public void execute(StateContext<MissionStates, MissionEvents> context) {
+    logger.info("** Falcon 9 ** Launching");
 
-        Message<MissionEvents> event = MessageBuilder.withPayload(MissionEvents.SUCCESS).build();
-        context.getStateMachine().sendEvent(Mono.just(event)).subscribe();
-    }
+    Message<MissionEvents> event = MessageBuilder.withPayload(MissionEvents.SUCCESS).build();
+    context.getStateMachine().sendEvent(Mono.just(event)).subscribe();
+  }
 }

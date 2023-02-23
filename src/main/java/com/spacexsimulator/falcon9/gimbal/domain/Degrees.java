@@ -5,12 +5,12 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class Degrees {
-    private Double value;
+  private Double value;
 
-    public void setValue(Double value) throws WrongDegreesValueException {
-        if (value <= 0 || value >= 20)
-            throw new WrongDegreesValueException("Gimbal degrees must be between 0 or 20");
+  public void setValue(Double value) throws WrongDegreesValueException {
+    if (value <= 0 || value >= 20)
+      throw new WrongDegreesValueException("Gimbal degrees must be between 0 or 20");
 
-        this.value = value;
-    }
+    this.value = value;
+  }
 }

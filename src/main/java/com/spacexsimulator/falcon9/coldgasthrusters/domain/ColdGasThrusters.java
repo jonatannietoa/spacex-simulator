@@ -12,6 +12,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ColdGasThrusters {
-    private ColdGasThruster left;
-    private ColdGasThruster right;
+  private ColdGasThruster left;
+  private ColdGasThruster right;
 }

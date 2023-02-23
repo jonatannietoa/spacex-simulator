@@ -9,10 +9,10 @@ import org.springframework.statemachine.action.Action;
 
 public class Stop implements Action<MissionStates, MissionEvents> {
 
-    Logger logger = LoggerFactory.getLogger(Stop.class);
+  Logger logger = LoggerFactory.getLogger(Stop.class);
 
-    @Override
-    public void execute(StateContext<MissionStates, MissionEvents> context) {
-        logger.error("** Falcon 9 ** Stopping (System Checks Failure)");
-    }
+  @Override
+  public void execute(StateContext<MissionStates, MissionEvents> context) {
+    logger.error("** Falcon 9 ** Stopping (System Checks Failure)");
+  }
 }

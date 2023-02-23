@@ -25,11 +25,11 @@ ver en la siguiente imagen:
 
 ## Installation
 
-Para ejecutar en local: 
+Para ejecutar en local:
 
 ```bash
-./gradlew build 
-./gradlew bootRun 
+./gradlew build
+./gradlew bootRun
 ```
 
 ## Fases de la misión
@@ -41,9 +41,9 @@ Se trata de que todos los micro servicios respondan con un mensaje de Health Che
 Por ejemplo del Health Check del motor será:
 ```json
 {
-  "mode": "OFF",
-  "throttle": 0,
-  "chamberPressure": 0
+"mode": "OFF",
+"throttle": 0,
+"chamberPressure": 0
 }
 ```
 ---
@@ -52,8 +52,8 @@ Por ejemplo del Health Check del motor será:
 Se trata de la fase de lanzamiento, y los micro servicios que entran en marcha son los siguientes:
 
 #### 2.1 Engine - ```POST https://{api-url}/api/engine/launch```
-El motor tiene que primero presurizar la cámara a `2000` psia y poner él `Mode` en `FULL`, esto quiere decir que el 
-atributo `throttle` hay que ajustarlo al 100%. 
+El motor tiene que primero presurizar la cámara a `2000` psia y poner él `Mode` en `FULL`, esto quiere decir que el
+atributo `throttle` hay que ajustarlo al 100%.
 
 **IMPORTANTE**: No se puede ajustar él `Mode` y `throttle` a la potencia
 máxima si la cámara no se ha presurizado, tampoco podemos presurizar la cámara de golpe, cada `100 ms` debemos incrementar
@@ -65,14 +65,14 @@ del cohete tendremos una interfaz controlando 8 motores.
 La respuesta de este endpoint al finalizar los ajustes debe ser:
 ```json
 {
-  "mode": "FULL",
-  "throttle": 1,
-  "chamberPressure": 2000
+"mode": "FULL",
+"throttle": 1,
+"chamberPressure": 2000
 }
 ```
 
 #### 2.2 Kerosene Control - ```POST https://{api-url}/api/kerosene/launch```
-El control de Keroseno primero de todo debe activar la `mainValve` y seguidamente comenzar a bombear hasta llegar a 
+El control de Keroseno primero de todo debe activar la `mainValve` y seguidamente comenzar a bombear hasta llegar a
 `fuelPumpPercentage` del 100 % con el valor `1`, donde él `flowRate` irá incrementando hasta `801 kg/s` de combustible al 100%.
 
 **IMPORTANTE**: No se puede ajustar él `fuelPumpPercentage` si la `mainValve` no está abierta. También debemos incrementar
@@ -81,10 +81,10 @@ la potencia de bombeo `40 kg/s` cada `100 ms`.
 La respuesta de este endpoint al finalizar los ajustes debe ser:
 ```json
 {
-  "mainValve": true,
-  "ratio": 2.4,
-  "fuelPumpPercentage": 1,
-  "flowRate": 801
+"mainValve": true,
+"ratio": 2.4,
+"fuelPumpPercentage": 1,
+"flowRate": 801
 }
 ```
 
@@ -98,10 +98,10 @@ la potencia de bombeo `95 kg/s` cada `100 ms`.
 La respuesta de este endpoint al finalizar los ajustes debe ser:
 ```json
 {
-  "mainValve": true,
-  "ratio": 2.4,
-  "loxPumpPercentage": 1,
-  "flowRate": 1919
+"mainValve": true,
+"ratio": 2.4,
+"loxPumpPercentage": 1,
+"flowRate": 1919
 }
 ```
 
@@ -112,16 +112,16 @@ Para el funcionamiento del `Kerosene` y él `LOX` tenemos una turbina y dos bomb
 diferentes combustibles. Esta bomba pone en marcha una turbina con él `throttle` al 100% donde las `rpm` irán incrementando
 hasta `36000 rpm` con un resultado total de `hp` de `10000 hp`. Las `rpm` irán incrementando `1800 rpm` cada `100 ms`.
 
-**IMPORTANTE**: Del JSON recibido deberemos comprobar que él `ratio` tanto del `lox` cómo `kerosene` corresponden 
-con los `flowRate` del kerosene y lox, la fórmula es la siguiente: `lox flowRate` / `kerosene flowRate` = `ratio`, con 
+**IMPORTANTE**: Del JSON recibido deberemos comprobar que él `ratio` tanto del `lox` cómo `kerosene` corresponden
+con los `flowRate` del kerosene y lox, la fórmula es la siguiente: `lox flowRate` / `kerosene flowRate` = `ratio`, con
 un margen de error de un 5%.
 
 La respuesta de este endpoint al finalizar los ajustes debe ser:
 ```json
 {
-  "throttle": 1,
-  "rpm": 36000,
-  "hp": 10000
+"throttle": 1,
+"rpm": 36000,
+"hp": 10000
 }
 ```
 
@@ -134,23 +134,23 @@ En la fase de ascenso entran en marcha el GPS, INS y Gimbal.
 #### 3.1 GPS - ```POST https://{api-url}/api/gps/ascent```
 El GPS recibirá las coordenadas destino y se sitúa en las siguientes coordenadas:
 
-##### Coordenadas actuales (las simulamos): 
-    **Latitude**	28.573469
-    **Longitude**	-80.651070
+##### Coordenadas actuales (las simulamos):
+	**Latitude**	28.573469
+	**Longitude**	-80.651070
 
 ##### Coordenadas de aterrizaje:
-    **Latitude** 28.775245058791235
-    **Longitude** -77.38535548520339
+	**Latitude** 28.775245058791235
+	**Longitude** -77.38535548520339
 
 Se deben de hacer check que las coordenadas de destino están a menos de 350 km de radio.
 
 La respuesta de este endpoint al finalizar los ajustes debe ser:
 ```json
 {
-  "actualLatitude": 28.573469,
-  "actualLongitude": -80.651070,
-  "targetLatitude": 28.775245058791235,
-  "targetLongitude": -77.38535548520339
+"actualLatitude": 28.573469,
+"actualLongitude": -80.651070,
+"targetLatitude": 28.775245058791235,
+"targetLongitude": -77.38535548520339
 }
 ```
 
@@ -178,9 +178,9 @@ misma posición a la vez).
 La respuesta de este endpoint al finalizar los ajustes debe ser:
 ```json
 {
-  "roll": 0,
-  "pitch": 0,
-  "yaw": 3.26
+"roll": 0,
+"pitch": 0,
+"yaw": 3.26
 }
 ```
 
@@ -196,9 +196,9 @@ atributo `throttle` hay que ajustarlo al 0%. Se puede realizar directamente.
 La respuesta de este endpoint al finalizar los ajustes debe ser:
 ```json
 {
-  "mode": "OFF",
-  "throttle": 0,
-  "chamberPressure": 1000
+"mode": "OFF",
+"throttle": 0,
+"chamberPressure": 1000
 }
 ```
 
@@ -209,10 +209,10 @@ El control de Keroseno primero de todo debe desactivar la `mainValve` y seguidam
 La respuesta de este endpoint al finalizar los ajustes debe ser:
 ```json
 {
-  "mainValve": false,
-  "ratio": 2.4,
-  "fuelPumpPercentage": 0,
-  "flowRate": 0
+"mainValve": false,
+"ratio": 2.4,
+"fuelPumpPercentage": 0,
+"flowRate": 0
 }
 ```
 
@@ -223,24 +223,24 @@ El control de LOX primero de todo debe desactivar la `mainValve` y seguidamente 
 La respuesta de este endpoint al finalizar los ajustes debe ser:
 ```json
 {
-  "mainValve": false,
-  "ratio": 2.4,
-  "loxPumpPercentage": 0,
-  "flowRate": 0
+"mainValve": false,
+"ratio": 2.4,
+"loxPumpPercentage": 0,
+"flowRate": 0
 }
 ```
 
 #### 4.4 Turbo Pump - ```POST https://{api-url}/api/turbopump/boostbackburn```
 Para el funcionamiento del `Kerosene` y él `LOX` tenemos una turbina y dos bombas conectadas que son las que bombean los
-diferentes combustibles. Esta bomba se debe desactivar con él `throttle` al 0% donde las `rpm` disminuyen hasta `0 rpm` 
+diferentes combustibles. Esta bomba se debe desactivar con él `throttle` al 0% donde las `rpm` disminuyen hasta `0 rpm`
 con un resultado total de `hp` de `0 hp`.
 
 La respuesta de este endpoint al finalizar los ajustes debe ser:
 ```json
 {
-  "throttle": 0,
-  "rpm": 0,
-  "hp": 0
+"throttle": 0,
+"rpm": 0,
+"hp": 0
 }
 ```
 
@@ -250,21 +250,21 @@ debe incrementar hasta él `100%` en `2000 ms`, pasados `3000 ms` después de ac
 
 https://www.youtube.com/watch?v=Vpsfy4npMhY
 
-**IMPORTANTE**: Del JSON que recibe se debe controlar que en el `engine` su atributo `mode` este `OFF` y 
+**IMPORTANTE**: Del JSON que recibe se debe controlar que en el `engine` su atributo `mode` este `OFF` y
 `throttle` al `0`.
 
 ```json
 {
-  "enableSeparation": true,
-  "throttle": 1,
-  "fairingSeparation": false,
-  "payloadSeparation": false
+"enableSeparation": true,
+"throttle": 1,
+"fairingSeparation": false,
+"payloadSeparation": false
 }
 ```
 
 ---
 ### 5.0 Flip maneuver
-Esta etapa se realiza seguida de la `Stage Separation` por eso los controles anteriores, ya que la maniobra de 
+Esta etapa se realiza seguida de la `Stage Separation` por eso los controles anteriores, ya que la maniobra de
 giro del cohete debe estar sincronizada después para que no choque con él `Falcon 9`.
 
 #### 5.1 Cold Gas Thrusters - ```POST https://{api-url}/api/coldgasthrusters/flipmaneuver```
@@ -278,14 +278,14 @@ La respuesta de este endpoint al finalizar los ajustes debe ser:
 
 ```json
 {
-  "right": {
-    "thrust": 1,
-    "secondsOfThrust": 13
-  },
-  "left": {
-    "thrust": 1,
-    "secondsOfThrust": 1
-  }      
+"right": {
+	"thrust": 1,
+	"secondsOfThrust": 13
+},
+"left": {
+	"thrust": 1,
+	"secondsOfThrust": 1
+}
 }
 
 ```
@@ -299,9 +299,9 @@ Reset de del Gimbal del `roll`, `pitch` y `yaw` a `0º`.
 La respuesta de este endpoint al finalizar los ajustes debe ser:
 ```json
 {
-  "roll": 0,
-  "pitch": 0,
-  "yaw": 0
+"roll": 0,
+"pitch": 0,
+"yaw": 0
 }
 ```
 ---
@@ -321,9 +321,9 @@ del cohete tendremos una interfaz controlando 8 motores.
 La respuesta de este endpoint al finalizar los ajustes debe ser:
 ```json
 {
-  "mode": "FULL",
-  "throttle": 0.7,
-  "chamberPressure": 1472
+"mode": "FULL",
+"throttle": 0.7,
+"chamberPressure": 1472
 }
 ```
 
@@ -337,10 +337,10 @@ la potencia de bombeo `40 kg/s` cada `100 ms`.
 La respuesta de este endpoint al finalizar los ajustes debe ser:
 ```json
 {
-  "mainValve": true,
-  "ratio": 2.4,
-  "fuelPumpPercentage": 0.7,
-  "flowRate": 560
+"mainValve": true,
+"ratio": 2.4,
+"fuelPumpPercentage": 0.7,
+"flowRate": 560
 }
 ```
 
@@ -354,10 +354,10 @@ la potencia de bombeo `95 kg/s` cada `100 ms`.
 La respuesta de este endpoint al finalizar los ajustes debe ser:
 ```json
 {
-  "mainValve": true,
-  "ratio": 2.4,
-  "loxPumpPercentage": 0.7,
-  "flowRate": 1343
+"mainValve": true,
+"ratio": 2.4,
+"loxPumpPercentage": 0.7,
+"flowRate": 1343
 }
 ```
 
@@ -373,9 +373,9 @@ un margen de error de un 5%.
 La respuesta de este endpoint al finalizar los ajustes debe ser:
 ```json
 {
-  "throttle": 0.7,
-  "rpm": 25200,
-  "hp": 7000
+"throttle": 0.7,
+"rpm": 25200,
+"hp": 7000
 }
 ```
 
@@ -389,9 +389,9 @@ atributo `throttle` hay que ajustarlo al 0%. Se puede realizar directamente.
 La respuesta de este endpoint al finalizar los ajustes debe ser:
 ```json
 {
-  "mode": "OFF",
-  "throttle": 0,
-  "chamberPressure": 1000
+"mode": "OFF",
+"throttle": 0,
+"chamberPressure": 1000
 }
 ```
 
@@ -404,30 +404,30 @@ donde `Z` hace referencia `Yaw` e `Y` a `Pitch`.
 La respuesta de este endpoint al finalizar los ajustes debe ser:
 ```json
 {
-  "zminus":{
-    "deploy":true,
-    "temperature":300,
-    "upDown":0,
-    "leftRight":0
-  },
-  "zplus":{
-    "deploy":true,
-    "temperature":300,
-    "upDown":0,
-    "leftRight":0
-  },
-  "yminus":{
-    "deploy":true,
-    "temperature":300,
-    "upDown":0,
-    "leftRight":0
-  },
-  "yplus":{
-    "deploy":true,
-    "temperature":300,
-    "upDown":0,
-    "leftRight":0
-  }
+"zminus":{
+	"deploy":true,
+	"temperature":300,
+	"upDown":0,
+	"leftRight":0
+},
+"zplus":{
+	"deploy":true,
+	"temperature":300,
+	"upDown":0,
+	"leftRight":0
+},
+"yminus":{
+	"deploy":true,
+	"temperature":300,
+	"upDown":0,
+	"leftRight":0
+},
+"yplus":{
+	"deploy":true,
+	"temperature":300,
+	"upDown":0,
+	"leftRight":0
+}
 }
 ```
 ---
@@ -450,9 +450,9 @@ del cohete tendremos una interfaz controlando 8 motores.
 La respuesta de este endpoint al finalizar los ajustes debe ser:
 ```json
 {
-  "mode": "FULL",
-  "throttle": 0.7,
-  "chamberPressure": 1472
+"mode": "FULL",
+"throttle": 0.7,
+"chamberPressure": 1472
 }
 ```
 
@@ -466,10 +466,10 @@ la potencia de bombeo `40 kg/s` cada `100 ms`.
 La respuesta de este endpoint al finalizar los ajustes debe ser:
 ```json
 {
-  "mainValve": true,
-  "ratio": 2.4,
-  "fuelPumpPercentage": 0.7,
-  "flowRate": 560
+"mainValve": true,
+"ratio": 2.4,
+"fuelPumpPercentage": 0.7,
+"flowRate": 560
 }
 ```
 
@@ -483,10 +483,10 @@ la potencia de bombeo `95 kg/s` cada `100 ms`.
 La respuesta de este endpoint al finalizar los ajustes debe ser:
 ```json
 {
-  "mainValve": true,
-  "ratio": 2.4,
-  "loxPumpPercentage": 0.7,
-  "flowRate": 1343
+"mainValve": true,
+"ratio": 2.4,
+"loxPumpPercentage": 0.7,
+"flowRate": 1343
 }
 ```
 
@@ -502,9 +502,9 @@ un margen de error de un 5%.
 La respuesta de este endpoint al finalizar los ajustes debe ser:
 ```json
 {
-  "throttle": 0.7,
-  "rpm": 25200,
-  "hp": 7000
+"throttle": 0.7,
+"rpm": 25200,
+"hp": 7000
 }
 ```
 ---
@@ -519,10 +519,10 @@ Leeremos las coordenadas de GPS recibidas en el Body de la petición, que llegar
 
 ```json
 {
-  "actualLatitude": 28.573469,
-  "actualLongitude": -80.651070,
-  "targetLatitude": 28.775245058791235,
-  "targetLongitude": -77.38535548520339
+"actualLatitude": 28.573469,
+"actualLongitude": -80.651070,
+"targetLatitude": 28.775245058791235,
+"targetLongitude": -77.38535548520339
 }
 ```
 
@@ -543,26 +543,26 @@ YPlus = Invertida a YMinus = 0,20 degrees
 La respuesta de este endpoint al finalizar los ajustes debe ser:
 ```json
 {
-  "zminus":{
-    "deploy":true,
-    "temperature":300,
-    "leftRight":-3.26
-  },
-  "zplus":{
-    "deploy":true,
-    "temperature":300,
-    "leftRight":3.26
-  },
-  "yminus":{
-    "deploy":true,
-    "temperature":300,
-    "leftRight":-0.20
-  },
-  "yplus":{
-    "deploy":true,
-    "temperature":300,
-    "leftRight":0.20
-  }
+"zminus":{
+	"deploy":true,
+	"temperature":300,
+	"leftRight":-3.26
+},
+"zplus":{
+	"deploy":true,
+	"temperature":300,
+	"leftRight":3.26
+},
+"yminus":{
+	"deploy":true,
+	"temperature":300,
+	"leftRight":-0.20
+},
+"yplus":{
+	"deploy":true,
+	"temperature":300,
+	"leftRight":0.20
+}
 }
 ```
 ---
@@ -595,10 +595,10 @@ Para abrir todas las patas del Falcon 9 debemos actualizar todos los atributos d
 La respuesta de este endpoint al finalizar los ajustes debe ser:
 ```json
 {
-    "Leg0": true,
-    "Leg90": true,
-    "Leg180": true,
-    "Leg270": false
+	"Leg0": true,
+	"Leg90": true,
+	"Leg180": true,
+	"Leg270": false
 }
 ```
 
@@ -611,30 +611,30 @@ Cerraremos las Grid Fins.
 La respuesta de este endpoint al finalizar los ajustes debe ser:
 ```json
 {
-  "zminus":{
-    "deploy":false,
-    "temperature":20,
-    "upDown":0,
-    "leftRight":0
-  },
-  "zplus":{
-    "deploy":false,
-    "temperature":20,
-    "upDown":0,
-    "leftRight":0
-  },
-  "yminus":{
-    "deploy":false,
-    "temperature":20,
-    "upDown":0,
-    "leftRight":0
-  },
-  "yplus":{
-    "deploy":false,
-    "temperature":20,
-    "upDown":0,
-    "leftRight":0
-  }
+"zminus":{
+	"deploy":false,
+	"temperature":20,
+	"upDown":0,
+	"leftRight":0
+},
+"zplus":{
+	"deploy":false,
+	"temperature":20,
+	"upDown":0,
+	"leftRight":0
+},
+"yminus":{
+	"deploy":false,
+	"temperature":20,
+	"upDown":0,
+	"leftRight":0
+},
+"yplus":{
+	"deploy":false,
+	"temperature":20,
+	"upDown":0,
+	"leftRight":0
+}
 }
 ```
 
@@ -659,14 +659,14 @@ Se activará él `ColdGasThruster` `right` y `left` durante `5000 ms` para vacia
 La respuesta de este endpoint al finalizar los ajustes debe ser:
 ```json
 {
-  "right":{
-    "thrust":1,
-    "secondsOfThrust":5
-  },
-  "left":{
-    "thrust":1,
-    "secondsOfThrust":5
-  }
+"right":{
+	"thrust":1,
+	"secondsOfThrust":5
+},
+"left":{
+	"thrust":1,
+	"secondsOfThrust":5
+}
 }
 ```
 
@@ -678,10 +678,10 @@ Cambiaremos el atributo `fairingSeparation` e informaremos al Hardware del secon
 
 ```json
 {
-  "enableSeparation": true,
-  "throttle": 1,
-  "fairingSeparation": true,
-  "payloadSeparation": false
+"enableSeparation": true,
+"throttle": 1,
+"fairingSeparation": true,
+"payloadSeparation": false
 }
 ```
 
@@ -695,10 +695,10 @@ Cambiaremos el atributo `payloadeparation` e informaremos al Hardware del second
 
 ```json
 {
-  "enableSeparation": true,
-  "throttle": 0,
-  "fairingSeparation": true,
-  "payloadSeparation": true
+"enableSeparation": true,
+"throttle": 0,
+"fairingSeparation": true,
+"payloadSeparation": true
 }
 ```
 

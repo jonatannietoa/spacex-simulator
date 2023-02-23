@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class MissionController {
 
-    private MissionService missionService;
+  private MissionService missionService;
 
-    public MissionController(MissionService missionService) {
-        this.missionService = missionService;
-    }
+  public MissionController(MissionService missionService) {
+    this.missionService = missionService;
+  }
 
-    @GetMapping("/api/mission/start-mission")
-    ResponseEntity<MissionCommandModelOutput> startMission() {
-        return new ResponseEntity<>(missionService.start(), HttpStatus.OK);
-    }
+  @GetMapping("/api/mission/start-mission")
+  ResponseEntity<MissionCommandModelOutput> startMission() {
+    return new ResponseEntity<>(missionService.start(), HttpStatus.OK);
+  }
 }
