@@ -1,6 +1,6 @@
 package com.spacexsimulator.falcon9.coldgasthrusters.application.commandmodel;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
