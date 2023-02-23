@@ -1,4 +1,4 @@
-package com.spacexsimulator.falcon9.coldgasthrusters.domain;
+package com.spacexsimulator.falcon9.coldgasthrusters.application.commandmodel;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -11,7 +11,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ColdGasThrusters {
-    private ColdGasThruster left;
-    private ColdGasThruster right;
+public class ColdGasThrusterCommandModelOutput {
+    private Double thrust;
+    private Integer secondsOfThrust;
+
 }

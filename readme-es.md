@@ -6,7 +6,7 @@ simplificado y son ficticios siguiendo un poco la lógica.
 Tendremos los siguientes micro servicios funcionando entre sí:
 
 - **falcon9**: Este repositorio es el principal que dará órdenes y enviará información al resto de MS.
-- **coldgasthusters**: Control del sistema de empuje mediante gas presurizado.
+- **coldgasthrusters**: Control del sistema de empuje mediante gas presurizado.
 - **engine**: Control de los 8 motores Merlin
 - **gimbal**: Control del sistema gimbal de los 8 motores Merlin
 - **gps**: Control del sistema de posicionamiento
@@ -302,7 +302,7 @@ La respuesta de este endpoint al finalizar los ajustes debe ser:
 
 ```json
 {
-  "coldgasthusters": [
+  "coldgasthrusters": [
     {
       "right": {
         "thrust": 1,
@@ -744,7 +744,7 @@ Se activará él `ColdGasThruster` `right` y `left` durante `5000 ms` para vacia
 La respuesta de este endpoint al finalizar los ajustes debe ser:
 ```json
 {
-  "coldgasthusters": [
+  "coldgasthrusters": [
     {
       "right": {
         "thrust": 1,
